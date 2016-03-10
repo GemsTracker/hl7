@@ -1,0 +1,24 @@
+{
+    "name": "gemstracker/hl7",
+    "description": "HL7 helper classes for GemsTracker",
+    "type": "library",
+    "require": {
+        "php": ">=5.3.9",
+        "pharmaintelligence/hl7" : "dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    },
+    "authors": [
+        {
+            "name": "Menno Dekker",
+            "email": "menno.dekker@erasmusmc.nl"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Gems\\": "src"
+        }
+    }
+}
