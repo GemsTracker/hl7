@@ -4,7 +4,7 @@
     "type": "library",
     "require": {
         "php": ">=5.3.9",
-        "pharma-intelligence/hl7" : "dev-master"
+        "pharmaintelligence/hl7" : "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*"
@@ -20,18 +20,5 @@
         "psr-4": {
             "Gems\\": "src"
         }
-    },
-    "repositories": [
-		{
-		  "type": "package",
-		  "package": {
-			"name": "pharma-intelligence/hl7",
-			"version": "dev-master",
-			"source": {
-			  "url": "https://github.com/Pharma-Intelligence/HL7.git",
-			  "type": "git"
-			}
-		  }
-		}
-    ]
+    }
 }
