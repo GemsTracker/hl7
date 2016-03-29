@@ -21,4 +21,10 @@
             "Gems\\": "src"
         }
     }
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/GemsTracker/hl7.git"
+        }
+    ]
 }
