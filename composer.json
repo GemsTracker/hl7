@@ -22,9 +22,16 @@
         }
     },
     "repositories": [
-        {
-            "type": "git",
-            "url": "https://github.com/Pharma-Intelligence/HL7.git"
-        }
+		{
+		  "type": "package",
+		  "package": {
+			"name": "pharma-intelligence/hl7",
+			"version": "dev-master",
+			"source": {
+			  "url": "https://github.com/Pharma-Intelligence/HL7.git",
+			  "type": "git"
+			}
+		  }
+		}
     ]
 }
