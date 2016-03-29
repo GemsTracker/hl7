@@ -20,7 +20,7 @@
         "psr-4": {
             "Gems\\": "src"
         }
-    }
+    },
     "repositories": [
         {
             "type": "git",
