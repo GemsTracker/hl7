@@ -10,7 +10,7 @@ use Gems\HL7\Type\XTN;
 
 /**
  * PID segment
- * 
+ *
  * SEQ	LEN	DT	OPT	RP/#	TBL#	ITEM#	ELEMENT NAME
  * 1	4	SI	O               00104	Set ID - PID
  * 2	20	CX	B               00105	Patient ID
@@ -39,7 +39,7 @@ use Gems\HL7\Type\XTN;
  * 25	2	NM	O               00128	Birth Order
  * 26	250	CE	O	Y	0171	00129	Citizenship
  * 27	250	CE	O		0172	00130	Veterans Military Status
- * 28	250	CE	B		0212	00739	Nationality 
+ * 28	250	CE	B		0212	00739	Nationality
  * 29	26	TS	O               00740	Patient Death Date and Time
  * 30	1	ID	O		0136	00741	Patient Death Indicator
  * 31	1	ID	O		0136	01535	Identity Unknown Indicator
@@ -60,9 +60,9 @@ class PIDSegment extends Segment {
     public function __construct($segmentName = self::IDENTIFIER) {
         parent::__construct($segmentName);
     }
-    
+
     /**
-     * 
+     *
      * @param type $idx
      * @return XPN
      */
@@ -73,14 +73,13 @@ class PIDSegment extends Segment {
             foreach ($items as $item) {
                 $result[] = new XPN($item);
             }
-        }        
+        }
 
-        return $result;    
-     
+        return $result;
     }
-    
+
     /**
-     * 
+     *
      * @param type $idx
      * @return XTN
      */
@@ -91,18 +90,79 @@ class PIDSegment extends Segment {
             foreach ($items as $item) {
                 $result[] = new XTN($item);
             }
-        }        
+        }
 
-        return $result;    
-     
-    }
+        return $result;
 
-    public function getSetId() {
-        return $this->get(1,0);
     }
 
     /**
-     * 
+     *
+     * @return CX
+     */
+    public function getAlternatePatientID() {
+        $result = array();
+        foreach ($this->get(4) as $item) {
+            $result[] = new CX($item);
+        }
+
+        return $result;
+    }
+
+    /**
+     *
+     * @return TS
+     */
+    public function getDeathDateTime()
+    {
+        return new TS($this->get(29,0));
+    }
+
+    /**
+     * Death indicator
+     *
+     * VALUE	LABEL
+     * Y        Yes
+     * N        No
+     *
+     * @return TS
+     */
+    public function getDeathIndicator()
+    {
+        return (string) $this->get(30,0);
+    }
+
+    /**
+     *
+     * @return TS
+     */
+    public function getLastUpdateDateTime()
+    {
+        return new TS($this->get(33,0));
+    }
+
+    /**
+     * Get the patient id for a specific authority
+     *
+     * @param string $authority Authority used for patient id
+     * @return CX or null
+     */
+    public function getPatientCxFor($authority)
+    {
+        if (! $authority) {
+            return null;
+        }
+        foreach ($this->getPatientIdentifierList() as $cx) {
+            if ($cx instanceof CX) {
+                if ($cx->getAssigningAuthority() == $authority) {
+                    return $cx;
+                }
+            }
+        }
+    }
+
+    /**
+     *
      * @return CX
      */
     public function getPatientId() {
@@ -110,8 +170,8 @@ class PIDSegment extends Segment {
     }
 
     /**
-     * 
-     * @return CX
+     *
+     * @return array [CX]
      */
     public function getPatientIdentifierList() {
         $result = array();
@@ -124,17 +184,18 @@ class PIDSegment extends Segment {
 
     /**
      * Get patient identifier by providing an Identifier code
-     * 
+     *
      * Example codes are:
      * DN   Doctor number
      * EI   Employee Identifier
      * PI   Patient Internal identifier
      * SS   Social Security number
-     * 
-     * @param string $identifier 
+     *
+     * @param string $identifier
      * @return CX|null
      */
-    public function getPatientIdentifierByIdentifier( $identifier) {
+    public function getPatientIdentifierByIdentifier($identifier)
+    {
         foreach ($this->getPatientIdentifierList() as $cx) {
             if ($cx->getIdentifierTypeCode() == $identifier)
                 return $cx;
@@ -144,110 +205,89 @@ class PIDSegment extends Segment {
     }
 
     /**
-     * 
-     * @return CX
+     * Get a patient name for a specific type
+     *
+     * @param string $type 'L' for Legal, leave empty for first, which should be legal
+     * @return XPN or null
      */
-    public function getAlternatePatientID() {
-        $result = array();
-        foreach ($this->get(4) as $item) {
-            $result[] = new CX($item);
+    public function getPatientXpnFor($type = null)
+    {
+        $xpns = $this->getPatientNames();
+
+        if (! $type) {
+            // Return first
+            return reset($xpns);
         }
 
-        return $result;
+        foreach ($xpns as $xpn) {
+            if ($xpn instanceof XPN) {
+                if ($xpn->getNameTypeCode() == $type) {
+                    return $xpn;
+                }
+            }
+        }
     }
-    
+
     /**
-     * 
-     * @return XPN
+     *
+     * @return array of XPN
      */
-    public function getPatientName()
+    public function getPatientNames()
     {
         return $this->_getXPN(5);
     }
-    
+
     /**
-     * 
+     *
      * @return XPN
      */
     public function getMotherMaidenName()
     {
         return $this->_getXPN(6);
-        
     }
-    
+
     /**
-     * 
+     *
      * @return TS
      */
     public function getBirthDateTime()
     {
         return new TS($this->get(7,0));
     }
-    
+
     public function getSex()
     {
         return (string) $this->get(8);
     }
-    
+
     /**
-     * 
+     *
      * @return XPN
      */
     public function getPatientAlias()
     {
-        return $this->_getXPN(9);        
+        return $this->_getXPN(9);
     }
 
     /**
-     * 
+     *
      * @return XTN
      */
-
-    public function getPhoneHome()
-    {
-        return $this->_getXTN(13);
-    }
-    
-    /**
-     * 
-     * @return XTN
-     */
-
     public function getPhoneBusiness()
     {
         return $this->_getXTN(14);
     }
-    
+
     /**
-     * 
-     * @return TS
+     *
+     * @return XTN
      */
-    public function getDeathDateTime()
+    public function getPhoneHome()
     {
-        return new TS($this->get(29,0));
-    }
-    
-    /**
-     * Death indicator
-     * 
-     * VALUE	LABEL
-     * Y        Yes
-     * N        No
-     * 
-     * @return TS
-     */
-    public function getDeathIndicator()
-    {
-        return (string) $this->get(30,0);
-    }
-    
-    /**
-     * 
-     * @return TS
-     */
-    public function getLastUpdateDateTime()
-    {
-        return new TS($this->get(33,0));
+        return $this->_getXTN(13);
     }
 
+    public function getSetId() {
+        return $this->get(1,0);
+    }
 }

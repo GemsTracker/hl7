@@ -10,9 +10,9 @@ use Gems\HL7\Type\XCN;
 
 /**
  * SCH: Scheduling Activity Information
- * 
+ *
  * The SCH segment contains general information about the scheduled appointment.
- * 
+ *
  * SEQ	LENGTH	DT	OPT	RPT / #	TBL #	NAME
  * SCH.1	75	EI	C	1           Placer Appointment ID
  * SCH.2	75	EI	C	1           Filler Appointment ID
@@ -44,16 +44,16 @@ use Gems\HL7\Type\XCN;
  *
  * @author Menno Dekker <menno.dekker@erasmusmc.nl>
  */
-class PV1Segment extends Segment {
+class SCHSegment extends Segment {
 
     const IDENTIFIER = 'SCH';
 
     public function __construct($segmentName = self::IDENTIFIER) {
         parent::__construct($segmentName);
     }
-    
+
     /**
-     * 
+     *
      * @param type $idx
      * @return XCN
      */
@@ -64,25 +64,23 @@ class PV1Segment extends Segment {
             foreach ($items as $item) {
                 $result[] = new XCN($item);
             }
-        }        
+        }
 
-        return $result;       
+        return $result;
     }
-    
+
     public function getPlacerAppointmentId()
     {
         return (string) $this->get(1,0);
     }
-    
+
     public function getFillerAppointmentId()
     {
         return (string) $this->get(2,0);
     }
-    
+
     public function getOccurrenceNumber()
     {
         return (string) $this->get(3,0);
-    }    
-            
-
+    }
 }

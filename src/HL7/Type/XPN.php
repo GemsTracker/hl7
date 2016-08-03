@@ -19,61 +19,65 @@ namespace Gems\HL7\Type;
  *
  * @author Menno Dekker <menno.dekker@erasmusmc.nl>
  */
-class XPN extends \Gems\HL7\Type {
-    
+class XPN extends \Gems\HL7\Type
+{
+    /**
+     *
+     * @return mixed
+     */
     public function getFamilyName()
     {
         return $this->_get(1);
     }
-    
+
     public function getGivenName()
     {
         return (string) $this->_get(2);
     }
-    
+
     public function getOtherGivenName()
     {
         return (string) $this->_get(3);
     }
-    
+
     public function getSuffix()
     {
         return (string) $this->_get(4);
     }
-    
+
     public function getPrefix()
     {
         return (string) $this->_get(5);
     }
-    
+
     public function getDegree()
     {
         return (string) $this->_get(6);
     }
-    
+
     public function getNameTypeCode()
     {
         return (string) $this->_get(7);
     }
-    
+
     public function getNameRepresentationCode()
     {
         return (string) $this->_get(8);
     }
-    
+
     public function getNameContext()
     {
         return $this->_get(9);
     }
-    
+
     public function getNameValidityRange()
     {
         return $this->_get(10);
     }
-    
+
     public function getNameAssemblyOrder()
     {
         return (string) $this->_get(11);
     }
-    
+
 }

@@ -38,7 +38,7 @@ class PIDSegmentTest extends PHPUnit_Framework_TestCase {
      * This method is called after a test is executed.
      */
     protected function tearDown() {
-        
+
     }
 
     /**
@@ -82,18 +82,18 @@ class PIDSegmentTest extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals('8101892', $id);
     }
-    
+
     public function testGetPhoneHomeNumber()
     {
         $homeNr = $this->object->getPhoneHome();
         $this->assertEquals('06-43064759', $homeNr[0]->getPhoneNumber());
     }
-    
+
     public function testGetBirthDateTime()
     {
         $this->assertEquals('19820703', $this->object->getBirthDateTime()->getDate());
     }
-    
+
     public function testGetDeathDateTime()
     {
         $this->assertEquals(null, $this->object->getDeathDateTime()->getDate());
