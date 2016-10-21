@@ -95,7 +95,7 @@ class RespondentExtractor implements ExtractorInterface
             }
         }
 
-        print_r($output);
+        // print_r($output);
 
         return $output;
     }

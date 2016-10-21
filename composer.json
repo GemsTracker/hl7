@@ -4,6 +4,7 @@
     "type": "library",
     "require": {
         "php": ">=5.3.9",
+        "magnafacta/zalt-loader": "dev-master",
         "pharmaintelligence/hl7" : "dev-master"
     },
     "require-dev": {

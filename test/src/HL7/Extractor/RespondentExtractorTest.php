@@ -2,7 +2,9 @@
 
 namespace Gems\HL7\Extractor;
 
-use PharmaIntelligence\HL7\Unserializer;
+use Gems\HL7\Unserializer;
+use Zalt\Loader\ProjectOverloader;
+
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -28,14 +30,20 @@ class RespondentExtractorTest extends PHPUnit_Framework_TestCase
     {
         $file         = 'resources/orm.txt';
         $testHl7      = file_get_contents($file);
-        $unserializer = new Unserializer();
+
+        $loader = new ProjectOverloader([
+            'Gems\\Clover',
+            'Gems',
+            'PharmaIntelligence',
+            ]);
+        $loader->createServiceManager();
+
+        $unserializer = $loader->create('HL7\\Unserializer');
         $map          = array(
             'PID' => 'Gems\HL7\Segment\PIDSegment'
         );
         $message   = $unserializer->loadMessageFromString($testHl7, $map);
-
-        $pids      = $message->getSegmentsByName('PID');
-        $this->pid = $pids[0];
+        $this->pid = $message->getPidSegment();
 
         $this->respondentExtractor = new RespondentExtractor();
     }
