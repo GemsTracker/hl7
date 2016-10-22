@@ -36,13 +36,13 @@ class MSHSegmentTest extends PHPUnit_Framework_TestCase {
      * This method is called after a test is executed.
      */
     protected function tearDown() {
-        
+
     }
 
     /**
      * @covers Gems\HL7\Segment\MSHSegment::getSendingApplication
      * @todo   Implement testGetSendingApplication().
-     */
+     * /
     public function testGetSendingApplication() {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -53,7 +53,7 @@ class MSHSegmentTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers Gems\HL7\Segment\MSHSegment::getSendingFacility
      * @todo   Implement testGetSendingFacility().
-     */
+     * /
     public function testGetSendingFacility() {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -64,7 +64,7 @@ class MSHSegmentTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers Gems\HL7\Segment\MSHSegment::getReceivingApplication
      * @todo   Implement testGetReceivingApplication().
-     */
+     * /
     public function testGetReceivingApplication() {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -75,7 +75,7 @@ class MSHSegmentTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers Gems\HL7\Segment\MSHSegment::getReceivingFacility
      * @todo   Implement testGetReceivingFacility().
-     */
+     * /
     public function testGetReceivingFacility() {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -94,7 +94,7 @@ class MSHSegmentTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers Gems\HL7\Segment\MSHSegment::getMessageType
      * @todo   Implement testGetMessageType().
-     */
+     * /
     public function testGetMessageType() {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -105,7 +105,7 @@ class MSHSegmentTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers Gems\HL7\Segment\MSHSegment::getMessageControlId
      * @todo   Implement testGetMessageControlId().
-     */
+     * /
     public function testGetMessageControlId() {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -116,7 +116,7 @@ class MSHSegmentTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers Gems\HL7\Segment\MSHSegment::getProcessingId
      * @todo   Implement testGetProcessingId().
-     */
+     * /
     public function testGetProcessingId() {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -127,7 +127,7 @@ class MSHSegmentTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers Gems\HL7\Segment\MSHSegment::getVersionId
      * @todo   Implement testGetVersionId().
-     */
+     * /
     public function testGetVersionId() {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -138,7 +138,7 @@ class MSHSegmentTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers Gems\HL7\Segment\MSHSegment::setSendingApplication
      * @todo   Implement testSetSendingApplication().
-     */
+     * /
     public function testSetSendingApplication() {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -149,7 +149,7 @@ class MSHSegmentTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers Gems\HL7\Segment\MSHSegment::setSendingFacility
      * @todo   Implement testSetSendingFacility().
-     */
+     * /
     public function testSetSendingFacility() {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -160,7 +160,7 @@ class MSHSegmentTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers Gems\HL7\Segment\MSHSegment::setReceivingApplication
      * @todo   Implement testSetReceivingApplication().
-     */
+     * /
     public function testSetReceivingApplication() {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -171,7 +171,7 @@ class MSHSegmentTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers Gems\HL7\Segment\MSHSegment::setReceivingFacility
      * @todo   Implement testSetReceivingFacility().
-     */
+     * /
     public function testSetReceivingFacility() {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -182,7 +182,7 @@ class MSHSegmentTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers Gems\HL7\Segment\MSHSegment::setDateTimeOfMessage
      * @todo   Implement testSetDateTimeOfMessage().
-     */
+     * /
     public function testSetDateTimeOfMessage() {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -193,7 +193,7 @@ class MSHSegmentTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers Gems\HL7\Segment\MSHSegment::setMessageType
      * @todo   Implement testSetMessageType().
-     */
+     * /
     public function testSetMessageType() {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -204,7 +204,7 @@ class MSHSegmentTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers Gems\HL7\Segment\MSHSegment::setMessageControlId
      * @todo   Implement testSetMessageControlId().
-     */
+     * /
     public function testSetMessageControlId() {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -215,7 +215,7 @@ class MSHSegmentTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers Gems\HL7\Segment\MSHSegment::setProcessingId
      * @todo   Implement testSetProcessingId().
-     */
+     * /
     public function testSetProcessingId() {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -226,12 +226,12 @@ class MSHSegmentTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers Gems\HL7\Segment\MSHSegment::setVersionId
      * @todo   Implement testSetVersionId().
-     */
+     * /
     public function testSetVersionId() {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
                 'This test has not been implemented yet.'
         );
     }
-
+    // */
 }

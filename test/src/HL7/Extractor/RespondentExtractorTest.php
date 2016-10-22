@@ -13,14 +13,20 @@ use PHPUnit_Framework_TestCase;
 class RespondentExtractorTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var RespondentExtractor
+     *
+     * @var \Gems\HL7\Node\Message;
      */
-    protected $respondentExtractor;
+    protected $message;
 
     /**
      * @var \Gems\HL7\Segment\PIDSegment
      */
     protected $pid;
+
+    /**
+     * @var RespondentExtractor
+     */
+    protected $respondentExtractor;
 
     /**
      * Sets up the fixture, for example, opens a network connection.
@@ -42,8 +48,8 @@ class RespondentExtractorTest extends PHPUnit_Framework_TestCase
         $map          = array(
             'PID' => 'Gems\HL7\Segment\PIDSegment'
         );
-        $message   = $unserializer->loadMessageFromString($testHl7, $map);
-        $this->pid = $message->getPidSegment();
+        $this->message = $unserializer->loadMessageFromString($testHl7, $map);
+        $this->pid     = $this->message->getPidSegment();
 
         $this->respondentExtractor = new RespondentExtractor();
     }
@@ -53,11 +59,19 @@ class RespondentExtractorTest extends PHPUnit_Framework_TestCase
         $expectedResult = array(
             'gr2o_patient_nr'      => '8101892',
             'gr2o_id_organization' => 70,
+            'gr2o_reception_code'  => 'OK',
             'grs_ssn'              => '134960713',
+            'grs_iso_lang'         => 'EN',
             'grs_first_name'       => 'Wendy',
             'grs_surname_prefix'   => 'van',
             'grs_last_name'        => 'Liempd',
             'grs_gender'           => 'F',
+            'grs_birthday'         => '1982-07-03',
+            'grs_address_1'        => 'Schipholstraat 20',
+            'grs_zipcode'          => '3045XC',
+            'grs_city'             => 'Rotterdam',
+            'grs_iso_country'      => 'EN',
+            'grs_phone_1'          => '06-43064759',
         );
 
         $this->respondentExtractor
@@ -65,7 +79,7 @@ class RespondentExtractorTest extends PHPUnit_Framework_TestCase
                 ->setSsnAutority('NLMINBIZA');
         $this->assertEquals(
                 $expectedResult,
-                $this->respondentExtractor->extractPatientRow($this->pid)
+                $this->respondentExtractor->extractPatientRow($this->message)
         );
     }
 

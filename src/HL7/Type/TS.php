@@ -8,7 +8,7 @@ use Gems\HL7\Type;
 /**
  * TS: Time Stamp
  *
- * Contains the exact time of an event, including the date and time. The date portion 
+ * Contains the exact time of an event, including the date and time. The date portion
  * of a time stamp follows the rules of a date field and the time portion follows
  * the rules of a time field. The time zone (+/-ZZZZ) is represented as +/-HHMM offset
  * from UTC (formerly Greenwich Mean Time (GMT)), where +0000 or -0000 both represent
@@ -34,8 +34,10 @@ class TS extends Type {
      */
     protected $_dateObject = null;
 
-    public function __construct($node) {
+    public function __construct($node)
+    {
         parent::__construct($node);
+
         //  Ignore offset and microseconds for now until we have an example
         $stamp = (string) $node;
 
@@ -57,36 +59,44 @@ class TS extends Type {
                 }
             }
             $dateObject->setTime($hour, $minute, $second);
-            
-            $this->_dateObject = $dateObject;            
+
+            $this->_dateObject = $dateObject;
         }
-        
+
     }
 
-    public function getDate() {
+    public function getDate()
+    {
         return $this->exists() ? $this->_dateObject->format(self::FORMAT_DATE) : null;
     }
 
-    public function getTime() {
-        return $this->exists() ? $this->_dateObject->format(self::FORMAT_TIME) : null;
-    }
-
-    public function getDateTime() {
+    public function getDateTime()
+    {
         return $this->exists() ? $this->_dateObject->format(self::FORMAT_DATETIME) : null;
     }
 
+    public function getFormatted($format)
+    {
+        return $this->exists() ? $this->_dateObject->format($format) : null;
+    }
+
+    public function getTime()
+    {
+        return $this->exists() ? $this->_dateObject->format(self::FORMAT_TIME) : null;
+    }
+
+
     /**
-     * 
+     *
      * @return DateTime
      */
     public function getObject() {
         return $this->exists() ? $this->_dateObject : null;
     }
 
-    public function exists() {
-        if ($this->_dateObject instanceof DateTime) return true;
-
-        return false;
+    public function exists()
+    {
+        return ($this->_dateObject instanceof DateTime);
     }
 
 }

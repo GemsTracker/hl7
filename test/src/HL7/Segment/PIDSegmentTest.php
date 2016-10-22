@@ -42,16 +42,6 @@ class PIDSegmentTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers Gems\HL7\Segment\PIDSegment::getSetId
-     */
-    public function testGetSetId() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
      * @covers Gems\HL7\Segment\PIDSegment::getPatientId
      */
     public function testGetPatientIdValue() {
@@ -86,7 +76,7 @@ class PIDSegmentTest extends PHPUnit_Framework_TestCase {
     public function testGetPhoneHomeNumber()
     {
         $homeNr = $this->object->getPhoneHome();
-        $this->assertEquals('06-43064759', $homeNr[0]->getPhoneNumber());
+        $this->assertEquals('06-43064759', $homeNr->getPhoneNumber());
     }
 
     public function testGetBirthDateTime()

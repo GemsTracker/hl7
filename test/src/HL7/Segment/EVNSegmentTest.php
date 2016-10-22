@@ -36,7 +36,7 @@ class EVNSegmentTest extends PHPUnit_Framework_TestCase {
      * This method is called after a test is executed.
      */
     protected function tearDown() {
-        
+
     }
 
     /**
@@ -50,13 +50,13 @@ class EVNSegmentTest extends PHPUnit_Framework_TestCase {
      * @covers Gems\HL7\Segment\EVNSegment::getRecordedDateTimestamp
      */
     public function testGetRecordedDateTimestamp() {
-        $this->assertEquals('20130308020600', $this->object->getRecordedDateTimestamp()->getDateTime());        
+        $this->assertEquals('20130308020600', $this->object->getRecordedDateTimestamp()->getDateTime());
     }
 
     /**
      * @covers Gems\HL7\Segment\EVNSegment::getPlannedDateTimestamp
      * @todo   Implement testGetRecordedDateTimeStamp()
-     */
+     * /
     public function testGetPlannedDateTimestamp() {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -67,7 +67,7 @@ class EVNSegmentTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers Gems\HL7\Segment\EVNSegment::getEventReasonCode
      * @todo   Implement testGetEventReasonCode().
-     */
+     * /
     public function testGetEventReasonCode() {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -78,7 +78,7 @@ class EVNSegmentTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers Gems\HL7\Segment\EVNSegment::getOperatorId
      * @todo   Implement testGetOperatorId().
-     */
+     * /
     public function testGetOperatorId() {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -96,12 +96,12 @@ class EVNSegmentTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers Gems\HL7\Segment\EVNSegment::getEventFacility
      * @todo   Implement testGetEventFacility().
-     */
+     * /
     public function testGetEventFacility() {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
                 'This test has not been implemented yet.'
         );
     }
-
+    // */
 }

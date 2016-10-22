@@ -5,6 +5,7 @@ namespace Gems\HL7\Segment;
 use Gems\HL7\Segment;
 use Gems\HL7\Type\CX;
 use Gems\HL7\Type\TS;
+use Gems\HL7\Type\XAD;
 use Gems\HL7\Type\XPN;
 use Gems\HL7\Type\XTN;
 
@@ -64,7 +65,7 @@ class PIDSegment extends Segment {
     /**
      *
      * @param type $idx
-     * @return XPN
+     * @return array of XPN
      */
     protected function _getXPN($idx)
     {
@@ -81,7 +82,7 @@ class PIDSegment extends Segment {
     /**
      *
      * @param type $idx
-     * @return XTN
+     * @return array of XTN
      */
     protected function _getXTN($idx)
     {
@@ -93,7 +94,6 @@ class PIDSegment extends Segment {
         }
 
         return $result;
-
     }
 
     /**
@@ -113,9 +113,9 @@ class PIDSegment extends Segment {
      *
      * @return TS
      */
-    public function getDeathDateTime()
+    public function getBirthDateTime()
     {
-        return new TS($this->get(29,0));
+        return new TS($this->get(7,0));
     }
 
     /**
@@ -136,9 +136,61 @@ class PIDSegment extends Segment {
      *
      * @return TS
      */
+    public function getDeathDateTime()
+    {
+        return new TS($this->get(29,0));
+    }
+
+    /**
+     *
+     * @return string
+     */
+    public function getEmailAddress()
+    {
+        // Get all 'phones'
+        $items = array_merge($this->_getXTN(13) + $this->_getXTN(14));
+        foreach ($items as $phone) {
+            if ($phone instanceof XTN) {
+                $email = $phone->getEmailAddress();
+
+                if ($email) {
+                    return $email;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     *
+     * @return TS
+     */
     public function getLastUpdateDateTime()
     {
         return new TS($this->get(33,0));
+    }
+
+    /**
+     *
+     * @return ZAD
+     */
+    public function getMailingAddress()
+    {
+        $item = $this->get(11, 0);
+
+        if ($item) {
+            return new XAD($item);
+        }
+    }
+
+    /**
+     *
+     * @return XPN
+     */
+    public function getMotherMaidenName()
+    {
+        return $this->_getXPN(6);
     }
 
     /**
@@ -205,6 +257,15 @@ class PIDSegment extends Segment {
     }
 
     /**
+     *
+     * @return array of XPN
+     */
+    public function getPatientNames()
+    {
+        return $this->_getXPN(5);
+    }
+
+    /**
      * Get a patient name for a specific type
      *
      * @param string $type 'L' for Legal, leave empty for first, which should be legal
@@ -230,38 +291,6 @@ class PIDSegment extends Segment {
 
     /**
      *
-     * @return array of XPN
-     */
-    public function getPatientNames()
-    {
-        return $this->_getXPN(5);
-    }
-
-    /**
-     *
-     * @return XPN
-     */
-    public function getMotherMaidenName()
-    {
-        return $this->_getXPN(6);
-    }
-
-    /**
-     *
-     * @return TS
-     */
-    public function getBirthDateTime()
-    {
-        return new TS($this->get(7,0));
-    }
-
-    public function getSex()
-    {
-        return (string) $this->get(8);
-    }
-
-    /**
-     *
      * @return XPN
      */
     public function getPatientAlias()
@@ -275,7 +304,9 @@ class PIDSegment extends Segment {
      */
     public function getPhoneBusiness()
     {
-        return $this->_getXTN(14);
+        $items = $this->_getXTN(14);
+
+        return reset($items);
     }
 
     /**
@@ -284,10 +315,23 @@ class PIDSegment extends Segment {
      */
     public function getPhoneHome()
     {
-        return $this->_getXTN(13);
+        $items = $this->_getXTN(13);
+
+        return reset($items);
     }
 
-    public function getSetId() {
-        return $this->get(1,0);
+    /**
+     *
+     * @return string
+     */
+    public function getPrimaryLanguage()
+    {
+        $pl = $this->get(15,0);
+        return reset($pl);
+    }
+
+    public function getSex()
+    {
+        return (string) $this->get(8);
     }
 }

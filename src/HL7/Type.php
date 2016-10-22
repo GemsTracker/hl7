@@ -11,7 +11,7 @@ use PharmaIntelligence\HL7\Node\Repetition;
  * @author Menno Dekker <menno.dekker@erasmusmc.nl>
  */
 class Type {
-    
+
     /**
      * @var Field
      */
@@ -21,15 +21,15 @@ class Type {
     public function __construct(Repetition $node) {
         $this->content = $node;
     }
-    
+
     public function _get($idx, $default = null)
     {
         $realIdx = $idx - 1;
         if ($realIdx == 0 && count($this->content) == 0) return $this->content->value;
         return $this->content->offsetExists($realIdx) ? $this->content->offsetGet($realIdx) : $default;
     }
-    
+
     public function __toString() {
         return (string) $this->content;
-    }    
+    }
 }
