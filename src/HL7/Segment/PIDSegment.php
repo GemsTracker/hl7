@@ -1,5 +1,14 @@
 <?php
 
+/**
+ *
+ * @package    Gems
+ * @subpackage HL7\Segment
+ * @author     Menno Dekker <menno.dekker@erasmusmc.nl>
+ * @copyright  Copyright (c) 2016, Erasmus MC and MagnaFacta B.V.
+ * @license    New BSD License
+ */
+
 namespace Gems\HL7\Segment;
 
 use Gems\HL7\Segment;
@@ -11,6 +20,8 @@ use Gems\HL7\Type\XTN;
 
 /**
  * PID segment
+ *
+ * See http://hl7-definition.caristix.com:9010
  *
  * SEQ	LEN	DT	OPT	RP/#	TBL#	ITEM#	ELEMENT NAME
  * 1	4	SI	O               00104	Set ID - PID
@@ -52,7 +63,11 @@ use Gems\HL7\Type\XTN;
  * 37	80	ST	O			0   1541	Strain
  * 38	250	CE	O	2	0429    01542	Production Class Code
  *
- * @author Menno Dekker <menno.dekker@erasmusmc.nl>
+ * @package    Gems
+ * @subpackage HL7\Segment
+ * @copyright  Copyright (c) 2016 Erasmus MC and MagnaFacta BV
+ * @license    New BSD License
+ * @since      Class available since version 1.8.1 Oct 20, 2016 404661
  */
 class PIDSegment extends Segment {
 

@@ -46,7 +46,12 @@ class RespondentExtractorTest extends PHPUnit_Framework_TestCase
 
         $unserializer = $loader->create('HL7\\Unserializer');
         $map          = array(
-            'PID' => 'Gems\HL7\Segment\PIDSegment'
+            'EVN' => 'Gems\HL7\Segment\EVNSegment',
+            'MSA' => 'Gems\HL7\Segment\MSASegment',
+            'MSH' => 'Gems\HL7\Segment\MSHSegment',
+            'PID' => 'Gems\HL7\Segment\PIDSegment',
+            'PV1' => 'Gems\HL7\Segment\PV1Segment',
+            'SCH' => 'Gems\HL7\Segment\SCHSegment',
         );
         $this->message = $unserializer->loadMessageFromString($testHl7, $map);
         $this->pid     = $this->message->getPidSegment();
@@ -58,7 +63,7 @@ class RespondentExtractorTest extends PHPUnit_Framework_TestCase
     {
         $expectedResult = array(
             'gr2o_patient_nr'      => '8101892',
-            'gr2o_id_organization' => 70,
+            'gr2o_id_organization' => 'HISCOM',
             'gr2o_reception_code'  => 'OK',
             'grs_ssn'              => '134960713',
             'grs_iso_lang'         => 'EN',
@@ -74,12 +79,10 @@ class RespondentExtractorTest extends PHPUnit_Framework_TestCase
             'grs_phone_1'          => '06-43064759',
         );
 
-        $this->respondentExtractor
-                ->setOrganizationId(70)
-                ->setSsnAutority('NLMINBIZA');
+        $this->respondentExtractor->setSsnAutority('NLMINBIZA');
         $this->assertEquals(
                 $expectedResult,
-                $this->respondentExtractor->extractPatientRow($this->message)
+                $this->respondentExtractor->extractRow($this->message)
         );
     }
 

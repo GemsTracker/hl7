@@ -56,4 +56,13 @@ class SCHSegmentTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('0007768281', $this->sch->getPlacerAppointmentId());
     }
 
+    public function testStartTime()
+    {
+        $this->assertEquals('2016-02-11T15:32:00+01:00', $this->sch->getAppointmentStartDatetime()->getFormatted('c'));
+    }
+
+    public function testEndTime()
+    {
+        $this->assertEquals('2016-02-11T16:02:00+01:00', $this->sch->getAppointmentEndDatetime()->getFormatted('c'));
+    }
 }

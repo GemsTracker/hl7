@@ -6,7 +6,7 @@
  * @subpackage HL7
  * @author     Menno Dekker <menno.dekker@erasmusmc.nl>
  * @copyright  Copyright (c) 2016 Erasmus MC and MagnaFacta BV
- * @license    No free license, do not copy
+ * @license    New BSD License
  */
 
 namespace Gems\HL7;
@@ -19,11 +19,11 @@ use PharmaIntelligence\HL7\Node\Segment as PharmaSegment;
  * @package    Gems
  * @subpackage HL7
  * @copyright  Copyright (c) 2016 Erasmus MC and MagnaFacta BV
- * @license    Not licensed, do not copy
+ * @license    New BSD License
  * @since      Class available since version 1.8.1 Oct 20, 2016 404661
  */
-class Segment extends PharmaSegment {
-
+class Segment extends PharmaSegment
+{
     /**
      * Utility function
      *

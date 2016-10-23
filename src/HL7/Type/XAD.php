@@ -6,32 +6,38 @@
  * @subpackage HL7\Type
  * @author     Matijs de Jong <mjong@magnafacta.nl>
  * @copyright  Copyright (c) 2016, Erasmus MC and MagnaFacta B.V.
- * @license    No free license, do not copy
+ * @license    New BSD License
  */
 
 namespace Gems\HL7\Type;
 
 /**
+ * XCN: Extended Address
  *
-SEQ	LENGTH	DT	OPT	TBL #	NAME
-XAD.1	0	SAD	O	Street	Street Address
-XAD.2	0	ST	O		Other Designation -- huisnummer toevoeging in nederland
-XAD.3	0	ST	O	City	City
-XAD.4	0	ST	O	State	State Or Province
-XAD.5	0	ST	O	ZipCode	Zip Or Postal Code
-XAD.6	0	ID	O		Country
-XAD.7	0	ID	O		Address Type
-XAD.8	0	ST	O		Other Geographic Designation
-XAD.9	0	IS	O		County/Parish Code
-XAD.10	0	IS	O		Census Tract
-XAD.11	0	ID	O		Address Representation Code
-XAD.12	0	DR	O		Address Validity Range
+ * This data type specifies the address of a person, place or organization plus associated information.
+ *
+ *
+ * See http://hl7-definition.caristix.com:9010
+ *
+ * SEQ	LENGTH	DT	OPT	TBL #	NAME
+ * XAD.1	0	SAD	O	Street	Street Address
+ * XAD.2	0	ST	O		Other Designation -- huisnummer toevoeging in nederland
+ * XAD.3	0	ST	O	City	City
+ * XAD.4	0	ST	O	State	State Or Province
+ * XAD.5	0	ST	O	ZipCode	Zip Or Postal Code
+ * XAD.6	0	ID	O		Country
+ * XAD.7	0	ID	O		Address Type
+ * XAD.8	0	ST	O		Other Geographic Designation
+ * XAD.9	0	IS	O		County/Parish Code
+ * XAD.10	0	IS	O		Census Tract
+ * XAD.11	0	ID	O		Address Representation Code
+ * XAD.12	0	DR	O		Address Validity Range
  *
  * @package    Gems
  * @subpackage HL7\Type
  * @copyright  Copyright (c) 2016, Erasmus MC and MagnaFacta B.V.
  * @license    No free license, do not copy
- * @since      Class available since version 1.8.1 Oct 22, 2016 5:27:17 PM
+ * @license    New BSD License
  */
 class XAD extends \Gems\HL7\Type
 {

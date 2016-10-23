@@ -1,9 +1,21 @@
 <?php
 
+/**
+ *
+ * @package    Gems
+ * @subpackage HL7\Type
+ * @author     Menno Dekker <menno.dekker@erasmusmc.nl>
+ * @copyright  Copyright (c) 2016, Erasmus MC and MagnaFacta B.V.
+ * @license    New BSD License
+ */
+
 namespace Gems\HL7\Type;
 
 /**
  * XPN: Extended Person Name
+ *
+ * See http://hl7-definition.caristix.com:9010
+ *
  * SEQ	LENGTH	DT	OPT	TBL #	NAME
  * XPN.1	0	FN	O		Family Name
  * XPN.2	0	ST	O       FirstName Given Name
@@ -17,7 +29,11 @@ namespace Gems\HL7\Type;
  * XPN.10	0	DR	O		Name Validity Range
  * XPN.11	0	ID	O		Name Assembly Order
  *
- * @author Menno Dekker <menno.dekker@erasmusmc.nl>
+ * @package    Gems
+ * @subpackage HL7\Type
+ * @copyright  Copyright (c) 2016, Erasmus MC and MagnaFacta B.V.
+ * @license    No free license, do not copy
+ * @license    New BSD License
  */
 class XPN extends \Gems\HL7\Type
 {

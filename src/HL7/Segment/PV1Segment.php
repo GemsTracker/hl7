@@ -1,5 +1,14 @@
 <?php
 
+/**
+ *
+ * @package    Gems
+ * @subpackage HL7\Segment
+ * @author     Menno Dekker <menno.dekker@erasmusmc.nl>
+ * @copyright  Copyright (c) 2016, Erasmus MC and MagnaFacta B.V.
+ * @license    New BSD License
+ */
+
 namespace Gems\HL7\Segment;
 
 use Gems\HL7\Segment;
@@ -10,8 +19,9 @@ use Gems\HL7\Type\XCN;
 
 /**
  * PV1: Patient visit
- * 
- * 
+ *
+ * See http://hl7-definition.caristix.com:9010
+ *
  * SEQ	LENGTH	DT	OPT	RPT/#	TBL #	NAME
  * PV1.1	4	SI	O	1           	Set ID - PV1
  * PV1.2	1	IS	R	1       0004	Patient Class
@@ -66,7 +76,11 @@ use Gems\HL7\Type\XCN;
  * PV1.51	1	IS	O	1       0326	Visit Indicator
  * PV1.52	250	XCN	O	*       0010	Other Healthcare Provider
  *
- * @author Menno Dekker <menno.dekker@erasmusmc.nl>
+ * @package    Gems
+ * @subpackage HL7\Segment
+ * @copyright  Copyright (c) 2016 Erasmus MC and MagnaFacta BV
+ * @license    New BSD License
+ * @since      Class available since version 1.8.1 Oct 20, 2016 404661
  */
 class PV1Segment extends Segment {
 
@@ -75,9 +89,9 @@ class PV1Segment extends Segment {
     public function __construct($segmentName = self::IDENTIFIER) {
         parent::__construct($segmentName);
     }
-    
+
     /**
-     * 
+     *
      * @param type $idx
      * @return XCN
      */
@@ -88,86 +102,86 @@ class PV1Segment extends Segment {
             foreach ($items as $item) {
                 $result[] = new XCN($item);
             }
-        }        
+        }
 
-        return $result;       
+        return $result;
     }
-    
+
     public function getSetId() {
         return (string) $this->get(1,0);
     }
-    
+
     public function getPatientClass() {
         return (string) $this->get(2,0);
     }
 
     /**
-     * 
+     *
      * @return PL
      */
     public function getPatientLocation() {
         return new PL($this->get(3,0));
     }
-    
+
     public function getAdmissionType() {
         return (string) $this->get(4,0);
     }
-    
+
     /**
-     * 
+     *
      * @return CX
      */
     public function getPreadmitNumber() {
         return new CX($this->get(5,0));
     }
-    
+
     /**
-     * 
+     *
      * @return PL
      */
     public function getPriorPatientLocation() {
         return new PL($this->get(6,0));
     }
-    
+
     /**
      * @return XCN
      */
     public function getAttendingDoctor() {
         return $this->_getXCN(7);
     }
-    
+
     /**
      * @return XCN
      */
     public function getReferringDoctor() {
         return $this->_getXCN(8);
     }
-    
+
     /**
      * @return XCN
      */
     public function getConsultingDoctor() {
         return $this->_getXCN(9);
     }
-    
+
     public function getHospitalService() {
         return (string) $this->get(10,0);
     }
-    
+
     /**
      * @return PL
      */
     public function getTemporaryLocation() {
         return new PL($this->get(11,0));
     }
-    
+
     /**
      * @return TS
      */
     public function getAdmitDateTime() {
         return new TS($this->get(44,0));
     }
-    
+
     /**
      * @return TS
      */
@@ -177,10 +191,10 @@ class PV1Segment extends Segment {
             foreach ($items as $item) {
                 $result[] = new TS($item);
             }
-        }        
+        }
 
         return $result;
     }
-            
+
 
 }

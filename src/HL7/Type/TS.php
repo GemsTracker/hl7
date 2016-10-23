@@ -1,5 +1,14 @@
 <?php
 
+/**
+ *
+ * @package    Gems
+ * @subpackage HL7\Type
+ * @author     Menno Dekker <menno.dekker@erasmusmc.nl>
+ * @copyright  Copyright (c) 2016, Erasmus MC and MagnaFacta B.V.
+ * @license    New BSD License
+ */
+
 namespace Gems\HL7\Type;
 
 use DateTime;
@@ -15,10 +24,16 @@ use Gems\HL7\Type;
  * UTC (without offset). The specific data representations used in the HL7 encoding
  * rules are compatible with ISO 8824-1987(E).
  *
+ * See http://hl7-definition.caristix.com:9010
+ *
  * SEQ	LENGTH	DT	OPT	TBL #	NAME
  * TS.1	0       ST	O           Time Of An Event
  *
- * @author Menno Dekker <menno.dekker@erasmusmc.nl>
+ * @package    Gems
+ * @subpackage HL7\Type
+ * @copyright  Copyright (c) 2016, Erasmus MC and MagnaFacta B.V.
+ * @license    No free license, do not copy
+ * @license    New BSD License
  */
 class TS extends Type {
 
@@ -65,6 +80,15 @@ class TS extends Type {
 
     }
 
+    /**
+     *
+     * @return boolean
+     */
+    public function exists()
+    {
+        return ($this->_dateObject instanceof DateTime);
+    }
+
     public function getDate()
     {
         return $this->exists() ? $this->_dateObject->format(self::FORMAT_DATE) : null;
@@ -80,23 +104,29 @@ class TS extends Type {
         return $this->exists() ? $this->_dateObject->format($format) : null;
     }
 
+    /**
+     *
+     * @return DateTime
+     */
+    public function getObject()
+    {
+        return $this->exists() ? $this->_dateObject : null;
+    }
+
     public function getTime()
     {
         return $this->exists() ? $this->_dateObject->format(self::FORMAT_TIME) : null;
     }
 
-
     /**
      *
-     * @return DateTime
+     * @param DateTime $dateTime
+     * @return self
      */
-    public function getObject() {
-        return $this->exists() ? $this->_dateObject : null;
-    }
-
-    public function exists()
+    public function setObject(\DateTime $dateTime)
     {
-        return ($this->_dateObject instanceof DateTime);
-    }
+        $this->_dateObject = $dateTime;
 
+        return $this;
+    }
 }

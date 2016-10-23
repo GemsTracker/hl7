@@ -11,8 +11,9 @@
 
 namespace Gems\HL7\Extractor;
 
+use Gems\HL7\Node\Message;
+
 /**
- * Marker class
  *
  * @package    Gems
  * @subpackage HL7\Extractor
@@ -22,5 +23,10 @@ namespace Gems\HL7\Extractor;
  */
 interface ExtractorInterface
 {
-
+    /**
+     *
+     * @param Message $message
+     * @return array Or false when not valid
+     */
+    public function extractRow(Message $message);
 }

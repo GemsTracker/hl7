@@ -67,14 +67,6 @@ class RespondentExtractor implements ExtractorInterface
     protected $message;
 
     /**
-     * The organization id for the patient (cannot be extracted from PIDSegment,
-     * maybe from MSGSegment.
-     *
-     * @var int
-     */
-    protected $organizationId = false;
-
-    /**
      * The authority id for the patient ID, usually LOCAL
      *
      * @var string
@@ -260,8 +252,7 @@ class RespondentExtractor implements ExtractorInterface
      */
     protected function _extractOrganizationId()
     {
-        // TODO: something with the header
-        return $this->getOrganizationId();
+        return $this->message->getMshSegment()->getSendingOrganizationId();
     }
 
     /**
@@ -338,10 +329,10 @@ class RespondentExtractor implements ExtractorInterface
 
     /**
      *
-     * @param PIDSegment $pid
+     * @param Message $message
      * @return array Or false when not valid
      */
-    public function extractPatientRow(Message $message)
+    public function extractRow(Message $message)
     {
         $this->message = $message;
         $this->pid     = $message->getPidSegment();
@@ -362,17 +353,6 @@ class RespondentExtractor implements ExtractorInterface
     }
 
     /**
-     * Get the organization id for the patient (cannot be extracted from PIDSegment,
-     * maybe from MSGSegment.
-     *
-     * @return $orgId
-     */
-    public function getOrganizationId()
-    {
-        return $this->organizationId;
-    }
-
-    /**
      * Get the authority id for the patient ID, usually LOCAL
      *
      * @return string
@@ -390,20 +370,6 @@ class RespondentExtractor implements ExtractorInterface
     public function getSsnAutority()
     {
         return $this->ssnAuthority;
-    }
-
-    /**
-     * Set the organization id for the patient (cannot be extracted from PIDSegment,
-     * maybe from MSGSegment.
-     *
-     * @param int $orgId
-     * @return \Gems\HL7\Extractor\RespondentExtractor
-     */
-    public function setOrganizationId($orgId)
-    {
-        $this->organizationId = $orgId;
-
-        return $this;
     }
 
     /**

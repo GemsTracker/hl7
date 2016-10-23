@@ -1,24 +1,38 @@
 <?php
 
+/**
+ *
+ * @package    Gems
+ * @subpackage HL7
+ * @author     Menno Dekker <menno.dekker@erasmusmc.nl>
+ * @copyright  Copyright (c) 2016 Erasmus MC and MagnaFacta BV
+ * @license    New BSD License
+ */
+
 namespace Gems\HL7;
 
 use PharmaIntelligence\HL7\Node\Field;
-use PharmaIntelligence\HL7\Node\Repetition;
+use PharmaIntelligence\HL7\Node\BaseNode;
 
 /**
- * Description of Type
  *
- * @author Menno Dekker <menno.dekker@erasmusmc.nl>
+ *
+ * @package    Gems
+ * @subpackage HL7
+ * @copyright  Copyright (c) 2016 Erasmus MC and MagnaFacta BV
+ * @license    New BSD License
+ * @since      Class available since version 1.8.1 Oct 20, 2016 404661
  */
-class Type {
-
+class Type
+{
     /**
      * @var Field
      */
     protected $content;
 
 
-    public function __construct(Repetition $node) {
+    public function __construct(BaseNode $node)
+    {
         $this->content = $node;
     }
 

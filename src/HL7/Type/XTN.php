@@ -1,9 +1,20 @@
 <?php
 
+/**
+ *
+ * @package    Gems
+ * @subpackage HL7\Type
+ * @author     Menno Dekker <menno.dekker@erasmusmc.nl>
+ * @copyright  Copyright (c) 2016, Erasmus MC and MagnaFacta B.V.
+ * @license    New BSD License
+ */
+
 namespace Gems\HL7\Type;
 
 /**
  * XTN: Extended Telecommunication Number
+ *
+ * See http://hl7-definition.caristix.com:9010
  *
  * SEQ	LENGTH	DT	OPT	TBL #	NAME
  * XTN.1	0	TN	O           Telephone Number
@@ -16,7 +27,11 @@ namespace Gems\HL7\Type;
  * XTN.8	0	NM	O           Extension
  * XTN.9	0	ST	O           Any Text
  *
- * @author Menno Dekker <menno.dekker@erasmusmc.nl>
+ * @package    Gems
+ * @subpackage HL7\Type
+ * @copyright  Copyright (c) 2016, Erasmus MC and MagnaFacta B.V.
+ * @license    No free license, do not copy
+ * @license    New BSD License
  */
 class XTN extends \Gems\HL7\Type
 {
