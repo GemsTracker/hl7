@@ -29,7 +29,18 @@ class AppointmentExtractor implements ExtractorInterface
         'gap_source'           => '_extractAppointmentSource',
         'gap_id_in_source'     => '_extractAppointmentPlacerId',
         'gap_code'             => '_extractAppointmentCode',
+        'gap_status'           => '_extractAppointmentStatus',
+        'gap_admission_time'   => '_extractAdmissionTime',
+        'gap_discharge_time'   => '_extractEndTime',
+        'gap_id_location'      => '_extractLocation',
     ];
+
+    /**
+     * Default code value
+     *
+     * @var string
+     */
+    protected $defaultCode = 'A';
 
     /**
      *
@@ -42,14 +53,6 @@ class AppointmentExtractor implements ExtractorInterface
      * @var \Gems\HL7\Node\Message;
      */
     protected $message;
-
-    /**
-     * The organization id for the patient (cannot be extracted from PIDSegment,
-     * maybe from MSGSegment.
-     *
-     * @var int
-     */
-    protected $organizationId = false;
 
     /**
      * The authority id for the patient ID, usually LOCAL
@@ -74,10 +77,30 @@ class AppointmentExtractor implements ExtractorInterface
      *
      * @return string Or false when should not be used
      */
+    protected function _extractAdmissionTime()
+    {
+
+        return $this->sch->getAppointmentStartDatetime()->getFormatted('c') ?: false;
+    }
+
+    /**
+     *
+     * @return string Or false when should not be used
+     */
+    protected function _extractEndTime()
+    {
+
+        return $this->sch->getAppointmentEndDatetime()->getFormatted('c') ?: false;
+    }
+
+    /**
+     *
+     * @return string Or false when should not be used
+     */
     protected function _extractAppointmentCode()
     {
 
-        return $this->sch->getPlacerAppointmentId();
+        return $this->defaultCode;
     }
 
     /**
@@ -98,6 +121,32 @@ class AppointmentExtractor implements ExtractorInterface
     {
 
         return $this->hl7SourceStartId . $this->_extractOrganizationId();
+    }
+
+    /**
+     *
+     * @return string Or false when should not be used
+     */
+    protected function _extractAppointmentStatus()
+    {
+        $type = strtoupper($this->message->getMshSegment()->getMessageType());
+
+        if (in_array($type, ['SIU^S15', 'SIU^S16', 'SIU^S17'])) {
+            return 'CA';
+        }
+        return 'AC';
+    }
+
+    /**
+     *
+     * @return string Or false when should not be used
+     */
+    protected function _extractLocation()
+    {
+        $location = $this->sch->getFillerLocation();
+        if ($location) {
+            return $location->getLocationDescription();
+        }
     }
 
     /**
@@ -141,22 +190,11 @@ class AppointmentExtractor implements ExtractorInterface
                 $output[$field] = $value;
             }
         }
-        if (! isset($output['gr2o_patient_nr'])) {
+        if (! isset($output['gr2o_patient_nr'], $output['gap_admission_time'])) {
             return false;
         }
 
         return $output;
-    }
-
-    /**
-     * Get the organization id for the patient (cannot be extracted from PIDSegment,
-     * maybe from MSGSegment.
-     *
-     * @return $orgId
-     */
-    public function getOrganizationId()
-    {
-        return $this->organizationId;
     }
 
     /**
@@ -167,20 +205,6 @@ class AppointmentExtractor implements ExtractorInterface
     public function getPatientIdAutority()
     {
         return $this->patientIdAuthority;
-    }
-
-    /**
-     * Set the organization id for the patient (cannot be extracted from PIDSegment,
-     * maybe from MSGSegment.
-     *
-     * @param int $orgId
-     * @return \Gems\HL7\Extractor\RespondentExtractor
-     */
-    public function setOrganizationId($orgId)
-    {
-        $this->organizationId = $orgId;
-
-        return $this;
     }
 
     /**

@@ -19,6 +19,8 @@ use Gems\HL7\Type\TS;
 use Gems\HL7\Type\XAD;
 use Gems\HL7\Type\XCN;
 
+use PharmaIntelligence\HL7\Node\Field;
+
 /**
  * SCH: Scheduling Activity Information
  *
@@ -89,7 +91,9 @@ class SCHSegment extends Segment
     {
         $items = $this->get($idx);
 
-        return new CE(reset($items));
+        if ($items instanceof Field) {
+            return new CE($items->current());
+        }
     }
 
     /**
@@ -332,6 +336,19 @@ class SCHSegment extends Segment
     public function getFillerContact()
     {
         return $this->_getXCN(16);
+    }
+
+    /**
+     *
+     * @return PL
+     */
+    public function getFillerLocation()
+    {
+        $item = $this->get(19, 0);
+
+        if ($item) {
+            return new PL($item);
+        }
     }
 
     /**
