@@ -24,15 +24,21 @@ use Gems\HL7\Node\Message;
 class AppointmentExtractor implements ExtractorInterface
 {
     protected $_fieldList = [
-        'gr2o_patient_nr'      => '_extractPatientId',
-        'gr2o_id_organization' => '_extractOrganizationId',
+        'gap_patient_nr'       => '_extractPatientId',
+        'gap_organization_id'  => '_extractOrganizationId',
         'gap_source'           => '_extractAppointmentSource',
         'gap_id_in_source'     => '_extractAppointmentPlacerId',
-        'gap_code'             => '_extractAppointmentCode',
-        'gap_status'           => '_extractAppointmentStatus',
+        'gap_admission_code'   => '_extractAppointmentCode',
+        'gap_status_code'      => '_extractAppointmentStatus',
         'gap_admission_time'   => '_extractAdmissionTime',
         'gap_discharge_time'   => '_extractEndTime',
-        'gap_id_location'      => '_extractLocation',
+        'gap_attended_by'      => '_extractAttendedBy',
+        'gap_referred_by'      => '_extractReferredBy',
+        'gap_activity'         => '_extractActivity',
+        'gap_procedure'        => '_extractProcedure',
+        'gap_location'         => '_extractLocation',
+        'gap_subject'          => '_extractSubject',
+        'gap_comment'          => '_extractComment',
     ];
 
     /**
@@ -77,6 +83,15 @@ class AppointmentExtractor implements ExtractorInterface
      *
      * @return string Or false when should not be used
      */
+    protected function _extractActivity()
+    {
+        return ((string) $this->sch->getAppointmentTypeText()) ? : false;
+    }
+
+    /**
+     *
+     * @return string Or false when should not be used
+     */
     protected function _extractAdmissionTime()
     {
 
@@ -89,7 +104,6 @@ class AppointmentExtractor implements ExtractorInterface
      */
     protected function _extractEndTime()
     {
-
         return $this->sch->getAppointmentEndDatetime()->getFormatted('c') ?: false;
     }
 
@@ -100,7 +114,7 @@ class AppointmentExtractor implements ExtractorInterface
     protected function _extractAppointmentCode()
     {
 
-        return $this->defaultCode;
+        return $this->defaultCode ?: false;
     }
 
     /**
@@ -141,12 +155,32 @@ class AppointmentExtractor implements ExtractorInterface
      *
      * @return string Or false when should not be used
      */
+    protected function _extractAttendedBy()
+    {
+        return ((string) $this->sch->getFillerContact()) ? : false;
+    }
+
+    /**
+     *
+     * @return string Or false when should not be used
+     */
+    protected function _extractComment()
+    {
+        return false;
+    }
+
+    /**
+     *
+     * @return string Or false when should not be used
+     */
     protected function _extractLocation()
     {
         $location = $this->sch->getFillerLocation();
         if ($location) {
             return $location->getLocationDescription();
         }
+
+        return false;
     }
 
     /**
@@ -155,7 +189,7 @@ class AppointmentExtractor implements ExtractorInterface
      */
     protected function _extractOrganizationId()
     {
-        return $this->message->getMshSegment()->getSendingOrganizationId();
+        return $this->message->getMshSegment()->getSendingOrganizationId() ?: false;
     }
 
     /**
@@ -168,6 +202,33 @@ class AppointmentExtractor implements ExtractorInterface
         if ($cxPid) {
             return $cxPid->getId();
         }
+        return false;
+    }
+
+    /**
+     *
+     * @return string Or false when should not be used
+     */
+    protected function _extractProcedure()
+    {
+        return ((string) $this->sch->getAppointmentReason()) ? : false;
+    }
+
+    /**
+     *
+     * @return string Or false when should not be used
+     */
+    protected function _extractReferredBy()
+    {
+        return ((string) $this->sch->getContactPerson()) ? : false;
+    }
+
+    /**
+     *
+     * @return string Or false when should not be used
+     */
+    protected function _extractSubject()
+    {
         return false;
     }
 
@@ -190,7 +251,7 @@ class AppointmentExtractor implements ExtractorInterface
                 $output[$field] = $value;
             }
         }
-        if (! isset($output['gr2o_patient_nr'], $output['gap_admission_time'])) {
+        if (! isset($output['gap_patient_nr'], $output['gap_admission_time'])) {
             return false;
         }
 

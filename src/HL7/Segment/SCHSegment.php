@@ -94,6 +94,7 @@ class SCHSegment extends Segment
         if ($items instanceof Field) {
             return new CE($items->current());
         }
+        return new CE($items);
     }
 
     /**
@@ -105,7 +106,10 @@ class SCHSegment extends Segment
     {
         $items = $this->get($idx);
 
-        return new XCN(reset($items));
+        if ($items instanceof Field) {
+            return new XCN($items->current());
+        }
+        return new XCN($items);
     }
 
     /**

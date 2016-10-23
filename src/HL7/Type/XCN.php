@@ -11,6 +11,8 @@
 
 namespace Gems\HL7\Type;
 
+use PharmaIntelligence\HL7\Node\Repetition;
+
 /**
  * XCN: Extended Composite ID Number And Name For Persons
  *
@@ -48,10 +50,9 @@ namespace Gems\HL7\Type;
  */
 class XCN extends \Gems\HL7\Type {
 
-    public function __construct(\PharmaIntelligence\HL7\Node\Repetition $node) {
+    public function __construct(Repetition $node) {
         parent::__construct($node);
-
-        var_dump($node);
+        // var_dump($node);
     }
 
 }
