@@ -3,7 +3,7 @@
     "description": "HL7 helper classes for GemsTracker",
     "type": "library",
     "require": {
-        "php": ">=5.3.9",
+        "php": ">=5.6.0",
         "magnafacta/zalt-loader": "dev-master",
         "pharmaintelligence/hl7": "dev-master"
     },
