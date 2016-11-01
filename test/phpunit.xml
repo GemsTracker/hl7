@@ -12,11 +12,11 @@
          verbose="true"
          strict="true">
     <testsuite>
-        <directory>classes/Gems</directory>
+        <directory>src/HL7</directory>
     </testsuite>
     <filter>
         <whitelist>
-            <directory suffix=".php">../src</directory>
+            <directory suffix=".php">../src/HL7</directory>
         </whitelist>
     </filter>
 </phpunit>
