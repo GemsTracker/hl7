@@ -20,7 +20,7 @@ class ACKTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $file = 'test/resources/orm.txt';
+        $file = TEST_DIR . '/resources/orm.txt';
         $testHl7 = file_get_contents($file);
         // file_put_contents($file, str_replace(chr(10), chr(13), $testHl7));
         // return;

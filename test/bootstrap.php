@@ -12,7 +12,8 @@
 
 date_default_timezone_set('Europe/Amsterdam');
 
-// TODO: check include path
+define('TEST_DIR', __DIR__);
+
  require __DIR__ . '/../vendor/autoload.php';
 //require __DIR__ . '/../../../../../Friesland./vendor/autoload.php';
 // put your code here

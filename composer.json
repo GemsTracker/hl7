@@ -23,6 +23,9 @@
             "Gems\\": "src"
         }
     },
+    "config": {
+        "bin-dir": "bin"
+    },
     "repositories": [
         {
             "type": "git",

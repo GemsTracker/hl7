@@ -28,7 +28,7 @@ class SCHSegmentTest extends PHPUnit_Framework_TestCase
      * This method is called before a test is executed.
      */
     protected function setUp() {
-        $file         = 'test/resources/siu-s14-1-msg.txt';
+        $file         = TEST_DIR . '/resources/siu-s14-1-msg.txt';
         $testHl7      = file_get_contents($file);
         $unserializer = new Unserializer();
         $map          = array(
