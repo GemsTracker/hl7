@@ -16,4 +16,4 @@ after_script:
   - bin/test-reporter
 addons:
     code_climate:
-        repo_token: 5bb4e82286c8da4f0a9ddcc1586cf17eae482cdefcd2d211ad8041df79493748
+        repo_token: b6b3650b1202896874a998e58c04133d4ea8f24e073bbd594d5ab9e43a64b560

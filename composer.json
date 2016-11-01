@@ -5,10 +5,11 @@
     "require": {
         "php": ">=5.3.9",
         "magnafacta/zalt-loader": "dev-master",
-        "pharmaintelligence/hl7" : "dev-master"
+        "pharmaintelligence/hl7": "dev-master"
     },
     "require-dev": {
-        "phpunit/phpunit": "3.7.*"
+        "phpunit/phpunit": "3.7.*",
+        "codeclimate/php-test-reporter": "dev-master"
     },
     "authors": [
         {
@@ -21,5 +22,11 @@
         "psr-4": {
             "Gems\\": "src"
         }
-    }
+    },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/MagnaFacta/zalt-loader.git"
+        }
+    ]
 }
