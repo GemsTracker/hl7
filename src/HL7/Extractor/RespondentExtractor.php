@@ -230,6 +230,10 @@ class RespondentExtractor implements ExtractorInterface
         }
 
         $name = $this->pid->getPatientXpnFor('L');
+        if (is_null($name)) {
+            $name = $this->pid->getPatientXpnFor();
+        }
+        $firstName = false;
         if ($name) {
             $firstName = $name->getGivenName();
 
