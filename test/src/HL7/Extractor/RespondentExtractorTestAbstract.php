@@ -1,7 +1,9 @@
 <?php
 
-namespace Gems\HL7\Extractor;
+namespace Gems\Test\HL7\Extractor;
 
+use Gems\HL7\Extractor\RespondentExtractor;
+use Gems\HL7\Node\Message;
 use Gems\HL7\Unserializer;
 use PHPUnit_Framework_TestCase;
 use Zalt\Loader\ProjectOverloader;
@@ -43,7 +45,7 @@ abstract class RespondentExtractorTestAbstract extends PHPUnit_Framework_TestCas
      *
      * @staticvar array $map
      * @param type $filename
-     * @return \Gems\HL7\Node\Message
+     * @return Message
      */
     protected function _getMessageFromFile($filename)
     {

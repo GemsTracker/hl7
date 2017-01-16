@@ -23,6 +23,11 @@
             "Gems\\": "src"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Gems\\Test\\": "test/src"
+        }
+    },
     "config": {
         "bin-dir": "bin"
     },
