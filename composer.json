@@ -20,13 +20,12 @@
     "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
-            "Gems\\": "src"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
+            "Gems\\": "src",
             "Gems\\Test\\": "test/src"
         }
+    },
+    "archive": {
+        "exclude": ["test", "!test/src/HL7/Extractor/RespondentExtractorTestAbstract.php"]
     },
     "config": {
         "bin-dir": "bin"
