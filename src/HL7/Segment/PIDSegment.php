@@ -212,9 +212,10 @@ class PIDSegment extends Segment {
      * Get the patient id for a specific authority
      *
      * @param string $authority Authority used for patient id
+     * @param string $typecode  Typecode used for patient id
      * @return CX or null
      */
-    public function getPatientCxFor($authority)
+    public function getPatientCxFor($authority, $typecode = null)
     {
         if (! $authority) {
             return null;
@@ -222,6 +223,11 @@ class PIDSegment extends Segment {
         foreach ($this->getPatientIdentifierList() as $cx) {
             if ($cx instanceof CX) {
                 if ($cx->getAssigningAuthority() == $authority) {
+                    // If typecode is not null and it does not match, skip to next record
+                    if (!is_null($typecode) && $cx->getIdentifierTypeCode() !== $typecode) {
+                        continue;
+                    }
+
                     return $cx;
                 }
             }

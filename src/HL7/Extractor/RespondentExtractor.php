@@ -97,6 +97,13 @@ class RespondentExtractor implements ExtractorInterface
      * @var string
      */
     protected $ssnAuthority = 'NLMINBIZA';
+    
+    /**
+     * The authority id for the Social Security number, SSN is not returned when empty
+     *
+     * @var string
+     */
+    protected $ssnTypeCode = 'NNNLD';
 
     /**
      *
@@ -367,13 +374,23 @@ class RespondentExtractor implements ExtractorInterface
     }
 
     /**
-     * Set the authority id for the Social Security number, SSN is not returned when empty
+     * Get the authority id for the Social Security number, SSN is not returned when empty
      *
      * @return string
      */
     public function getSsnAutority()
     {
         return $this->ssnAuthority;
+    }
+    
+    /**
+     * Get the typecode for the Social Security number
+     *
+     * @return string
+     */
+    public function getSsnTypeCode()
+    {
+        return $this->ssnTypeCode;
     }
 
     /**
@@ -391,13 +408,17 @@ class RespondentExtractor implements ExtractorInterface
 
     /**
      * Set the authority id for the Social Security number, SSN is not returned when empty
+     * 
+     * Use typecode when authority provides more than one number
      *
      * @param string $authority     E.g. 'NLMINBIZA' for BSN
+     * @param string $typecode      E.g. 'NNNLD' for BSN, 'PPN' for passport/identity card
      * @return \Gems\HL7\Extractor\RespondentExtractor
      */
-    public function setSsnAutority($authority)
+    public function setSsnAutority($authority, $typeCode = null)
     {
         $this->ssnAuthority = $authority;
+        $this->ssnTypecode  = $typeCode;
 
         return $this;
     }
