@@ -52,9 +52,10 @@ class Unserializer extends PharmaUnserializer implements TargetInterface
      *
      * @param string $hl7String
      * @param array $segmentClassMap
+     * @param boolean $noEncodingCheck  To prevent endless loops, use this switch
      * @return \Gems\HL7\Node\Message
      */
-    public function loadMessageFromString($hl7String, $segmentClassMap = array())
+    public function loadMessageFromString($hl7String, $segmentClassMap = array(), $noEncodingCheck = false)
     {
         $this->hl7String = $hl7String;
         $this->segmentClassMap = $segmentClassMap;
@@ -66,6 +67,15 @@ class Unserializer extends PharmaUnserializer implements TargetInterface
         $this->message->setEscapeSequences($this->escapeSequences);
 
         $this->splitSegments();
+        
+        if ($encoding = $this->message->getMessageHeaderSegment()->getCharacterset()) {
+            $internal = mb_internal_encoding();
+            if ($noEncodingCheck === false && $encoding !== $internal) {
+                $message = mb_convert_encoding($hl7String, $internal, $encoding);
+                // Use third parameter to prevent endless loops
+                $this->message = $this->loadMessageFromString($message, $segmentClassMap, true);
+            }
+        }
         return $this->message;
     }
 }

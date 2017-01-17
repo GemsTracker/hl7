@@ -54,6 +54,15 @@ use Gems\HL7\Type\TS;
 class MSHSegment extends Segment
 {
     const IDENTIFIER = 'MSH';
+    
+    public function getCharacterset() {
+        if (count($this->children) >= 16) {
+            return $this->children[16][0]->value;
+        } 
+        
+        // Fallback, try to detect encoding
+        return mb_detect_encoding($this->__toString(), "auto");
+    }
 
     public function getSendingApplication() {
         return $this->children[1][0]->value;
