@@ -38,6 +38,7 @@ class SCHSegmentTest extends PHPUnit_Framework_TestCase
         $file         = TEST_DIR . '/resources/siu-s14-1-msg.txt';
         $testHl7      = file_get_contents($file);
         $map          = array(
+            'MSH' => 'Gems\HL7\Segment\MSHSegment',
             'PID' => 'Gems\HL7\Segment\PIDSegment',
             'SCH' => 'Gems\HL7\Segment\SCHSegment',
         );

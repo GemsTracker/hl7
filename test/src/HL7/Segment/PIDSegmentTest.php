@@ -34,6 +34,7 @@ class PIDSegmentTest extends PHPUnit_Framework_TestCase {
         $testHl7      = file_get_contents($file);
 
         $map          = array(
+            'MSH' => 'Gems\HL7\Segment\MSHSegment',
             'PID' => 'Gems\HL7\Segment\PIDSegment'
         );
         $message      = $unserializer->loadMessageFromString($testHl7, $map);

@@ -14,21 +14,23 @@ class RespondentExtractorTest extends RespondentExtractorTestAbstract
         $message = $this->_getMessageFromFile('orm.txt');
 
         $expectedResult = array(
-            'gr2o_patient_nr'      => '8101892',
-            'gr2o_id_organization' => 'HISCOM',
+            'gr2o_patient_nr'      => '1001303',
+            'gr2o_id_organization' => 'NES',
             'gr2o_reception_code'  => 'OK',
             'grs_ssn'              => '134960713',
-            'grs_iso_lang'         => 'EN',
-            'grs_first_name'       => 'Wendy',
-            'grs_surname_prefix'   => 'van',
-            'grs_last_name'        => 'Liempd',
+            'grs_iso_lang'         => 'DE',
+            'grs_first_name'       => 'A',
+            'grs_surname_prefix'   => 'de',
+            'grs_last_name'        => 'Peterse',
             'grs_gender'           => 'F',
-            'grs_birthday'         => '1982-07-03',
-            'grs_address_1'        => 'Schipholstraat 20',
-            'grs_zipcode'          => '3045XC',
-            'grs_city'             => 'Rotterdam',
-            'grs_iso_country'      => 'EN',
-            'grs_phone_1'          => '06-43064759',
+            'grs_birthday'         => '1970-01-15',
+            'grs_address_1'        => 'Woonstraße 2232 II',
+            'grs_zipcode'          => '90210',
+            'grs_city'             => 'Kukeleku',
+            'grs_iso_country'      => 'DE',
+            'grs_phone_1'          => '0106565656',
+            'grs_email'            => 'email@example.net',
+            'grs_phone_2'          => '0612345678',
         );
 
         $this->respondentExtractor->setSsnAutority('NLMINBIZA');
@@ -42,21 +44,23 @@ class RespondentExtractorTest extends RespondentExtractorTestAbstract
         $message = $this->_getMessageFromFile('orm_1.txt');
 
         $expectedResult = array(
-            'gr2o_patient_nr'      => '8101892',
-            'gr2o_id_organization' => 'HISCOM',
+            'gr2o_patient_nr'      => '1001303',
+            'gr2o_id_organization' => 'NES',
             'gr2o_reception_code'  => 'OK',
             'grs_ssn'              => '134960713',
-            'grs_iso_lang'         => 'EN',
-            'grs_first_name'       => 'Wendy',
-            'grs_surname_prefix'   => 'van',
-            'grs_last_name'        => 'Liempd',
+            'grs_iso_lang'         => 'DE',
+            'grs_first_name'       => 'Abc',
+            'grs_surname_prefix'   => 'de',
+            'grs_last_name'        => 'Peterse',
             'grs_gender'           => 'F',
-            'grs_birthday'         => '1982-07-03',
-            'grs_address_1'        => 'Schipholstraat 20',
-            'grs_zipcode'          => '3045XC',
-            'grs_city'             => 'Rotterdam',
-            'grs_iso_country'      => 'EN',
-            'grs_phone_1'          => '06-43064759',
+            'grs_birthday'         => '1970-01-15',
+            'grs_address_1'        => 'Woonstraße 2232 II',
+            'grs_zipcode'          => '90210',
+            'grs_city'             => 'Kukeleku',
+            'grs_iso_country'      => 'DE',
+            'grs_phone_1'          => '0106565656',
+            'grs_email'            => 'email@example.net',
+            'grs_phone_2'          => '0612345678',
         );
 
         $this->respondentExtractor->setSsnAutority('NLMINBIZA');

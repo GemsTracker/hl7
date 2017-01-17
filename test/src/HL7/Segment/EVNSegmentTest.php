@@ -28,11 +28,12 @@ class EVNSegmentTest extends PHPUnit_Framework_TestCase {
         ]);
         $loader->createServiceManager();
 
-        $unserializer        = $loader->create('HL7\\Unserializer');        
+        $unserializer = $loader->create('HL7\\Unserializer');        
         $file         = TEST_DIR . '/resources/orm.txt';
         $testHl7      = file_get_contents($file);
         
         $map          = array(
+            'MSH' => 'Gems\HL7\Segment\MSHSegment',
             'EVN' => 'Gems\HL7\Segment\EVNSegment'
         );
         $message      = $unserializer->loadMessageFromString($testHl7, $map);

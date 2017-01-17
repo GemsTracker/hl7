@@ -32,6 +32,7 @@ class PV1SegmentTest extends PHPUnit_Framework_TestCase {
         $file         = TEST_DIR . '/resources/orm.txt';
         $testHl7      = file_get_contents($file);
         $map          = array(
+            'MSH' => 'Gems\HL7\Segment\MSHSegment',
             'PV1' => 'Gems\HL7\Segment\PV1Segment'
         );
         $message      = $unserializer->loadMessageFromString($testHl7, $map);
