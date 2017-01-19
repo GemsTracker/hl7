@@ -20,8 +20,7 @@
     "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
-            "Gems\\": "src",
-            "Gems\\Test\\": "test/src"
+            "Gems\\": "src"
         }
     },
     "archive": {
