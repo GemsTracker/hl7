@@ -40,11 +40,34 @@ class XTN extends \Gems\HL7\Type
         return (string) $this->_get(1);
     }
 
+    /**
+     * PRN	Primary Residence Number
+     * ORN	Other Residence Number
+     * WPN	Work Number
+     * VHN	Vacation Home Number
+     * ASN	Answering Service Number
+     * EMR	Emergency Number
+     * NET	Network (email) Address
+     * BPN	Beeper Number
+     * 
+     * @return type
+     */
     public function getUseCode()
     {
         return (string) $this->_get(2);
     }
 
+    /**
+     * PH	Telephone
+     * FX	Fax
+     * MD	Modem
+     * CP	Cellular Phone
+     * BP	Beeper
+     * Internet	Internet Address: Use Only If TelecommunicationUse Code Is NET
+     * X.400	X.400 email address: Use Only If TelecommunicationUse Code Is NET
+     * 
+     * @return type
+     */
     public function getEquipmentType()
     {
         return (string) $this->_get(3);

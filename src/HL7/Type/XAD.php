@@ -49,14 +49,18 @@ class XAD extends \Gems\HL7\Type
     {
         $streetPart = $this->_get(1);
 
-        if (isset($streetPart[1])) {
-            $street = $streetPart[1] . ' ' . $streetPart[2];
+        if (count($streetPart) == 0) {
+            $street = $streetPart;
         } else {
-            $street = $streetPart[0];
+            $street[] = $streetPart[1];
+            $street[] = $streetPart[2];
+            $street = array_diff($street, ['""']);
+            $street = join(' ', $street);
         }
+        
         $letter = (string) $this->_get(2);
         if ($letter) {
-            return $street . ' ' . $letter;
+            $street .= ' ' . $letter;
         }
         return $street;
     }

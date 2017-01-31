@@ -39,8 +39,17 @@ class Type
     public function _get($idx, $default = null)
     {
         $realIdx = $idx - 1;
-        if ($realIdx == 0 && count($this->content) == 0) return $this->content->value;
-        return $this->content->offsetExists($realIdx) ? $this->content->offsetGet($realIdx) : $default;
+        
+        if ($realIdx == 0 && count($this->content) == 0) {
+            $value = $this->content->value;
+        } elseif ($this->content->offsetExists($realIdx)) {
+            $value = $this->content->offsetGet($realIdx);
+        } else {
+            $value = $default;
+        }
+        
+        if ((string) $value === '""') $value = null;
+        return $value;
     }
 
     public function __toString() {
