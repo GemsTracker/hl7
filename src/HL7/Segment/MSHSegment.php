@@ -56,7 +56,7 @@ class MSHSegment extends Segment
     const IDENTIFIER = 'MSH';
     
     public function getCharacterset() {
-        if (count($this->children) >= 16) {
+        if (count($this->children) > 16) {
             return $this->children[16][0]->value;
         } 
         
