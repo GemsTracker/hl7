@@ -26,6 +26,8 @@ class ACKTest extends TestAbstract
         
         $file = TEST_DIR . '/resources/orm.txt';
         $message = $this->_getMessageFromFile($file);
+        $this->message = $message;
+        $this->message2 = $this->_getMessageFromFile($file);
         $this->object = new ACK($message);
     }
     
@@ -33,6 +35,9 @@ class ACKTest extends TestAbstract
     {
         $expected = "MSH|^~\&|TESTSYSTEM|TESTFACILITY|NES|NINTENDO|20170103075313||ACK^A08|4208|T|2.4|||AL|NE|NLD|Windows-1252\rMSA|AA|4208";
         $this->assertEquals($this->object->__toString(), $expected);
+        
+        // Make sure the original message is unchanged
+        $this->assertEquals($this->message->__toString(), $this->message2->__toString());
     }
 
     /**
