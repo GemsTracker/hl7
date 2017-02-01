@@ -12,8 +12,8 @@
 namespace Gems\HL7\Extractor;
 
 use Gems\HL7\Node\Message;
-use Gems\HL7\Segment\PIDSegment;
 use Gems\HL7\Type\XAD;
+use Gems\HL7\Type\XTN;
 use PharmaIntelligence\HL7\Node\Component;
 
 /**
@@ -56,7 +56,7 @@ class RespondentExtractor implements ExtractorInterface
 
     /**
      *
-     * @var \Gems\HL7\Type\XAD
+     * @var XAD
      */
     protected $mailingAddres;
 
@@ -285,7 +285,23 @@ class RespondentExtractor implements ExtractorInterface
      */
     protected function _extractPhoneBusiness()
     {
-        return $this->pid->getPhoneBusiness()->getPhoneNumber() ?: false;
+        // Add phone numbers in preferred order
+        $xtns[] = $this->pid->getPhoneBusiness('WPN', 'PH');
+        $xtns[] = $this->pid->getPhoneBusiness('WPN', 'CP');
+
+        /** @var $xtns XTN[] */
+        // Get the phone numbers if possible
+        $phones = [];
+        foreach($xtns as $xtn) {
+            if (!is_null($xtn)) {
+                $phones[] = $xtn->getPhoneNumber();                
+            }                    
+        }
+        
+        $phones = array_filter($phones);
+        $phone  = reset($phones);
+        
+        return $phone;
     }
 
     /**
@@ -294,7 +310,25 @@ class RespondentExtractor implements ExtractorInterface
      */
     protected function _extractPhoneHome()
     {
-        return $this->pid->getPhoneHome()->getPhoneNumber() ?: false;
+        // Add phone numbers in preferred order
+        $xtns[] = $this->pid->getPhoneHome('PRN', 'PH');
+        $xtns[] = $this->pid->getPhoneHome('PRN', 'CP');
+        $xtns[] = $this->pid->getPhoneHome('ORN', 'PH');
+        $xtns[] = $this->pid->getPhoneHome('ORN', 'CP');
+
+        /** @var $xtns XTN[] */
+        // Get the phone numbers if possible
+        $phones = [];
+        foreach($xtns as $xtn) {
+            if (!is_null($xtn)) {
+                $phones[] = $xtn->getPhoneNumber();                
+            }                    
+        }
+        
+        $phones = array_filter($phones);
+        $phone  = reset($phones);
+        
+        return $phone;
     }
 
     /**
@@ -397,7 +431,7 @@ class RespondentExtractor implements ExtractorInterface
      * Set the authority id for the patient ID, usually LOCAL
      *
      * @param string $authority
-     * @return \Gems\HL7\Extractor\RespondentExtractor
+     * @return RespondentExtractor
      */
     public function setPatientIdAutority($authority)
     {
@@ -413,7 +447,7 @@ class RespondentExtractor implements ExtractorInterface
      *
      * @param string $authority     E.g. 'NLMINBIZA' for BSN
      * @param string $typecode      E.g. 'NNNLD' for BSN, 'PPN' for passport/identity card
-     * @return \Gems\HL7\Extractor\RespondentExtractor
+     * @return RespondentExtractor
      */
     public function setSsnAutority($authority, $typeCode = null)
     {

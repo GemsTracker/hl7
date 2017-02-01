@@ -114,10 +114,12 @@ class PIDSegment extends Segment {
     /**
      * Iternal helper function
      * 
-     * @param type $items
-     * @param type $code
-     * @param type $type
-     * @return type
+     * @see XTN
+     * 
+     * @param XTN[] $items Array of XTNs
+     * @param string $code
+     * @param string $type
+     * @return XTN|null
      */
     protected function _getXTNByType($items, $code, $type)
     {
@@ -188,7 +190,7 @@ class PIDSegment extends Segment {
     public function getEmailAddress()
     {
         // Get all 'phones'
-        $items = array_merge($this->_getXTN(13) + $this->_getXTN(14));
+        $items = array_merge($this->getPhonehomeList() + $this->getPhoneBusinessList());
         foreach ($items as $phone) {
             if ($phone instanceof XTN) {
                 $email = $phone->getEmailAddress();
