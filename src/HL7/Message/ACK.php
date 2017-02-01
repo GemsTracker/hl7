@@ -43,20 +43,34 @@ class ACK extends Message {
         $mshs        = $incomingMessage->getSegmentsByName('MSH');
         /* @var $msh Segment\MSHSegment */
         $msh         = array_shift($mshs);
-        $mshResponse = clone $msh;
+        
+        // To copy the segment, we create a newMSH segment, and add a new field with a repetition that hold the string value from the incoming MSH
+        $class = get_class($msh);
+        $mshResponse = new $class('MSH');
+        foreach($msh as $field) {
+            $class = get_class($field);            
+            $newField = new $class();            
+            $mshResponse->append($newField);
+            $class = get_class($field->children[0]);
+            $newRepetition = new $class($field->__toString());
+            $newField->append($newRepetition);
+        }
 
         $msgType = $msh->getMessageType();
 
         $mshResponse->setMessageType('ACK^' . $msgType[1]); // Return second part
-        $receivedApplication = $msh->getSendingApplication();
-        $receivedFacility    = $msh->getSendingFacility();
-        $sendingApplication  = $msh->getReceivingApplication();
-        $sendingFacility     = $msh->getReceivingFacility();
+        
+        // Flip sending and receiving application/facility
+        $receivedApplication = (string) $msh->getSendingApplication();
+        $receivedFacility    = (string) $msh->getSendingFacility();
+        $sendingApplication  = (string) $msh->getReceivingApplication();
+        $sendingFacility     = (string) $msh->getReceivingFacility();
         $mshResponse->setReceivingApplication($receivedApplication);
         $mshResponse->setReceivingFacility($receivedFacility);
         $mshResponse->setSendingApplication($sendingApplication);
         $mshResponse->setSendingFacility($sendingFacility);
 
+        // Add the MSA segment
         $ackSegment = new MSASegment();
         $this->append($mshResponse);
         $this->append($ackSegment);
