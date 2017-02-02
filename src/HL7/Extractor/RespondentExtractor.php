@@ -35,9 +35,9 @@ class RespondentExtractor implements ExtractorInterface
         'grs_ssn'              => '_extractSsn',
         'grs_iso_lang'         => '_extractLanguage',
         'grs_email'            => '_extractEmail',
-        'grs_first_name'       => '_extractNameParts',
-        'grs_surname_prefix'   => '_extractNameParts',
-        'grs_last_name'        => '_extractNameParts',
+        'grs_first_name'       => '_extractFirstName',
+        'grs_surname_prefix'   => '_extractSurnamePrefix',
+        'grs_last_name'        => '_extractLastName',
         'grs_gender'           => '_extractGender',
         'grs_birthday'         => '_extractBirthDay',
         'grs_address_1'        => '_extractAddress1',
@@ -177,6 +177,24 @@ class RespondentExtractor implements ExtractorInterface
     {
         return $this->pid->getEmailAddress() ?: false;
     }
+    
+    /**
+     * Extract the firstname, overrule if you prefer initials
+     * 
+     * @return type
+     */
+    protected function _extractFirstName()
+    {
+        // bij L record alleen initialen, bij B record alle voornamen, bij N record alleen de roepnaam
+        $names = [
+            $this->pid->getPatientXpnFor('N'), // Try nickname first
+            $this->pid->getPatientXpnFor('B'), // Try first (and other) firstnames
+            $this->pid->getPatientXpnFor('L'), // Only initials normally
+            $this->pid->getPatientXpnFor()      // Anything will do
+        ];
+        
+        return $this->getFirstName($names);       
+    }
 
     /**
      *
@@ -213,6 +231,63 @@ class RespondentExtractor implements ExtractorInterface
         }
 
         return $this->mailingAddres->getCountryIso() ?: $this->defaultCountry;
+    }
+    
+    protected function _extractLastName()
+    {
+        // bij L(egal) record alleen initialen, bij B(irth) record alle voornamen, bij N(ick) record alleen de roepnaam
+        $name = $this->pid->getPatientXpnFor('L');
+        if (is_null($name)) {
+            $name = $this->pid->getPatientXpnFor();
+        }
+
+        $nameTypeCode = $name->getNameTypeCode();
+        switch ($nameTypeCode) {
+            case 'B':
+                $nameParts = $name->getFamilyName();
+                $lastName  = $nameParts->getBirthName();
+                break;
+
+            case 'L':
+                $nameParts     = $name->getFamilyName();
+
+                if ($order = $name->getNameAssemblyOrder()) {
+                    /**
+                     * NL0	onbekend
+                     * NL1	eigennaam
+                     * NL2	naampartner
+                     * NL3	naampartner gevolgd door eigennaam
+                     * NL4	eigennaam gevolgd door naam partner
+                     */
+                    switch ($order) {
+                        case 'NL2':
+                            $lastName = $nameParts->getPartnerName();
+                            break;
+
+                        case 'NL3':
+                            $lastName = $nameParts->getPartnerName() . '-' . join(' ', $nameParts->getBirthPrefix(), $nameParts->getBirthName());
+                            break;
+
+                        case 'NL4':
+                            $lastName = $nameParts->getBirthName() . '-' . join(' ', $nameParts->getPartnerPrefix(), $nameParts->getPartnerName());
+                            break;
+
+                        case 'NL1':
+                        default:
+                            $lastName = $eigenNaam;
+                            break;
+                    }
+                } else {
+                    $lastName = $nameParts->getBirthName();
+                }
+                break;
+
+            default:
+                $lastName = '';
+                break;
+        }
+
+        return (string) $lastName;
     }
 
     /**
@@ -358,6 +433,59 @@ class RespondentExtractor implements ExtractorInterface
         }
         return false;
     }
+    
+    protected function _extractSurnamePrefix()
+    {
+        // bij L(egal) record alleen initialen, bij B(irth) record alle voornamen, bij N(ick) record alleen de roepnaam
+        $name = $this->pid->getPatientXpnFor('L');
+        if (is_null($name)) {
+            $name = $this->pid->getPatientXpnFor();
+        }
+
+        $nameTypeCode = $name->getNameTypeCode();
+        switch ($nameTypeCode) {
+            case 'B':
+                $nameParts = $name->getFamilyName();
+                $prefix    = $nameParts->getBirthPrefix();
+                break;
+
+            case 'L':
+                $nameParts     = $name->getFamilyName();
+                $eigenPrefix   = $nameParts->getBirthPrefix();
+                $partnerPrefix = $nameParts->getPartnerPrefix();
+
+                if ($order = $name->getNameAssemblyOrder()) {
+                    /**
+                     * NL0	onbekend
+                     * NL1	eigennaam
+                     * NL2	naampartner
+                     * NL3	naampartner gevolgd door eigennaam
+                     * NL4	eigennaam gevolgd door naam partner
+                     */
+                    switch ($order) {
+                        case 'NL2':
+                        case 'NL3':
+                            $prefix = $partnerPrefix;
+                            break;
+
+                        case 'NL4':
+                        case 'NL1':
+                        default:
+                            $prefix = $eigenPrefix;
+                            break;
+                    }
+                } else {
+                    $prefix = $nameParts->getBirthPrefix();
+                }
+                break;
+
+            default:
+                $prefix = '';
+                break;
+        }
+
+        return (string) $prefix;
+    }
 
     /**
      *
@@ -395,6 +523,64 @@ class RespondentExtractor implements ExtractorInterface
         }
 
         return $output;
+    }
+    
+    /**
+     * Internal helper function
+     * 
+     * @see self::_extractFirstName
+     * 
+     * @param XPN[] $names
+     * @return type
+     */
+    protected function getFirstName($names)
+    {
+        /** @var $names XPN[] */
+        $names = array_filter($names);  // Strip emtpy elements
+
+        $firstNames = [];        
+        foreach ($names as $name) {
+            $nameTypeCode = $name->getNameTypeCode();
+            switch ($nameTypeCode) {
+                case 'B':
+                    $firstName  = $name->getGivenName();
+                    $otherNames = $name->getOtherGivenName();
+                    if (!empty($otherNames)) {
+                        $firstName .= ' ' . $otherNames;
+                    }
+                    break;
+
+                case 'N':
+                    $firstName = $name->getGivenName();
+                    break;
+
+                case 'L':
+                    $firstName  = $name->getGivenName();
+                    $otherNames = $name->getOtherGivenName();
+                    if (!empty($otherNames)) {
+                        $firstName .= ' ' . $otherNames;
+                    }
+
+                    if (!empty($firstName)) {
+                        $firstName = $firstName . ' ';
+                    }
+
+                    $firstName = str_replace(' ', '.', $firstName);
+                    break;
+
+                default:
+                    // Should not be here... could be P for partner, then don't use
+                    $firstName = '';
+                    break;
+            }
+            $firstNames[] = $firstName;
+        }
+        
+        $firstNames = array_filter($firstNames);
+
+        if (false === $firstNames) return null;
+
+        return reset($firstNames);
     }
 
     /**
