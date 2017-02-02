@@ -11,6 +11,8 @@
 
 namespace Gems\HL7\Type;
 
+use Gems\HL7\Type;
+
 /**
  * XPN: Extended Person Name
  *
@@ -35,15 +37,15 @@ namespace Gems\HL7\Type;
  * @license    No free license, do not copy
  * @license    New BSD License
  */
-class XPN extends \Gems\HL7\Type
+class XPN extends Type
 {
     /**
      *
-     * @return mixed
+     * @return FN
      */
     public function getFamilyName()
     {
-        return $this->_get(1);
+        return new FN($this->_get(1));
     }
 
     public function getGivenName()
