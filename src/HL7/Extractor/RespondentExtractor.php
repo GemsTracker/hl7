@@ -291,48 +291,6 @@ class RespondentExtractor implements ExtractorInterface
     }
 
     /**
-     * A function called three times: first first_name, then surname_prefix and then family_name
-     *
-     * @return string Or false when should not be used
-     */
-    protected function _extractNameParts()
-    {
-        static $lastName, $surnamePrefix;
-
-        if (null !== $surnamePrefix) {
-            $result = $surnamePrefix;
-            $surnamePrefix = null;
-            return $result;
-        }
-
-        if (null !== $lastName) {
-            $result = $lastName;
-            $lastName = null;
-            return $result;
-        }
-
-        $name = $this->pid->getPatientXpnFor('L');
-        if (is_null($name)) {
-            $name = $this->pid->getPatientXpnFor();
-        }
-        $firstName = false;
-        if ($name) {
-            $firstName = $name->getGivenName();
-
-            $familyName = $name->getFamilyName();
-            if ($familyName instanceof Component) {
-                $surnamePrefix = (string) $familyName[1];
-                $lastName = (string)  $familyName[2];
-            } else {
-                $surnamePrefix = false;
-                $lastName = (string) $familyName;
-            }
-        }
-
-        return $firstName;
-    }
-
-    /**
      *
      * @return string Or false when should not be used
      */
