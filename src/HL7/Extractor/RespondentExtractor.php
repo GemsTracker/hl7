@@ -274,7 +274,7 @@ class RespondentExtractor implements ExtractorInterface
 
                         case 'NL1':
                         default:
-                            $lastName = $eigenNaam;
+                            $lastName = $nameParts->getBirthName();
                             break;
                     }
                 } else {
