@@ -56,11 +56,20 @@ class TS extends Type {
         //  Ignore offset and microseconds for now until we have an example
         $stamp = (string) $node;
 
-        if (strlen($stamp) >= 8) {
+        
+        if (strlen($stamp) >= 4) {
+            $year = substr($stamp, 0, 4);
+            $month = substr($stamp, 4, 2);
+            if (false === $month || $month == 0) {
+                $month = 7;
+            }
+            $day = substr($stamp, 6, 2);
+            if (false === $day || $day == 0) {
+                $day = 1;
+            }
+            
             $dateObject = new DateTime();
-            $dateObject->setDate(
-                    substr($stamp, 0, 4), substr($stamp, 4, 2), substr($stamp, 6, 2)
-            );
+            $dateObject->setDate($year, $month, $day);
 
             $hour   = 0;
             $minute = 0;
