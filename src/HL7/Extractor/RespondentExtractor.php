@@ -97,7 +97,7 @@ class RespondentExtractor implements ExtractorInterface
      * @var string
      */
     protected $ssnAuthority = 'NLMINBIZA';
-    
+
     /**
      * The authority id for the Social Security number, SSN is not returned when empty
      *
@@ -177,10 +177,10 @@ class RespondentExtractor implements ExtractorInterface
     {
         return $this->pid->getEmailAddress() ?: false;
     }
-    
+
     /**
      * Extract the firstname, overrule if you prefer initials
-     * 
+     *
      * @return type
      */
     protected function _extractFirstName()
@@ -192,8 +192,8 @@ class RespondentExtractor implements ExtractorInterface
             $this->pid->getPatientXpnFor('L'), // Only initials normally
             $this->pid->getPatientXpnFor()      // Anything will do
         ];
-        
-        return $this->getFirstName($names);       
+
+        return $this->getFirstName($names);
     }
 
     /**
@@ -232,7 +232,7 @@ class RespondentExtractor implements ExtractorInterface
 
         return $this->mailingAddres->getCountryIso() ?: $this->defaultCountry;
     }
-    
+
     protected function _extractLastName()
     {
         // bij L(egal) record alleen initialen, bij B(irth) record alle voornamen, bij N(ick) record alleen de roepnaam
@@ -251,34 +251,33 @@ class RespondentExtractor implements ExtractorInterface
             case 'L':
                 $nameParts     = $name->getFamilyName();
 
-                if ($order = $name->getNameAssemblyOrder()) {
-                    /**
-                     * NL0	onbekend
-                     * NL1	eigennaam
-                     * NL2	naampartner
-                     * NL3	naampartner gevolgd door eigennaam
-                     * NL4	eigennaam gevolgd door naam partner
-                     */
-                    switch ($order) {
-                        case 'NL2':
-                            $lastName = $nameParts->getPartnerName();
-                            break;
+                /**
+                 * NL0	onbekend
+                 * NL1	eigennaam
+                 * NL2	naampartner
+                 * NL3	naampartner gevolgd door eigennaam
+                 * NL4	eigennaam gevolgd door naam partner
+                 */
+                $order = $name->getNameAssemblyOrder();
+                $order = $this->fixNameAssemblyOrder($order, $nameParts);
 
-                        case 'NL3':
-                            $lastName = $nameParts->getPartnerName() . '-' . join(' ', array($nameParts->getBirthPrefix(), $nameParts->getBirthName()));
-                            break;
+                switch ($order) {
+                    case 'NL2':
+                        $lastName = $nameParts->getPartnerName();
+                        break;
 
-                        case 'NL4':
-                            $lastName = $nameParts->getBirthName() . '-' . join(' ', array($nameParts->getPartnerPrefix(), $nameParts->getPartnerName()));
-                            break;
+                    case 'NL3':
+                        $lastName = $nameParts->getPartnerName() . '-' . join(' ', array($nameParts->getBirthPrefix(), $nameParts->getBirthName()));
+                        break;
 
-                        case 'NL1':
-                        default:
-                            $lastName = $nameParts->getBirthName();
-                            break;
-                    }
-                } else {
-                    $lastName = $nameParts->getBirthName();
+                    case 'NL4':
+                        $lastName = $nameParts->getBirthName() . '-' . join(' ', array($nameParts->getPartnerPrefix(), $nameParts->getPartnerName()));
+                        break;
+
+                    case 'NL1':
+                    default:
+                        $lastName = $nameParts->getBirthName();
+                        break;
                 }
                 break;
 
@@ -327,13 +326,13 @@ class RespondentExtractor implements ExtractorInterface
         $phones = [];
         foreach($xtns as $xtn) {
             if (!is_null($xtn)) {
-                $phones[] = $xtn->getPhoneNumber();                
-            }                    
+                $phones[] = $xtn->getPhoneNumber();
+            }
         }
-        
+
         $phones = array_filter($phones);
         $phone  = reset($phones);
-        
+
         return $phone;
     }
 
@@ -354,13 +353,13 @@ class RespondentExtractor implements ExtractorInterface
         $phones = [];
         foreach($xtns as $xtn) {
             if (!is_null($xtn)) {
-                $phones[] = $xtn->getPhoneNumber();                
-            }                    
+                $phones[] = $xtn->getPhoneNumber();
+            }
         }
-        
+
         $phones = array_filter($phones);
         $phone  = reset($phones);
-        
+
         return $phone;
     }
 
@@ -391,7 +390,7 @@ class RespondentExtractor implements ExtractorInterface
         }
         return false;
     }
-    
+
     protected function _extractSurnamePrefix()
     {
         // bij L(egal) record alleen initialen, bij B(irth) record alle voornamen, bij N(ick) record alleen de roepnaam
@@ -412,28 +411,27 @@ class RespondentExtractor implements ExtractorInterface
                 $eigenPrefix   = $nameParts->getBirthPrefix();
                 $partnerPrefix = $nameParts->getPartnerPrefix();
 
-                if ($order = $name->getNameAssemblyOrder()) {
-                    /**
-                     * NL0	onbekend
-                     * NL1	eigennaam
-                     * NL2	naampartner
-                     * NL3	naampartner gevolgd door eigennaam
-                     * NL4	eigennaam gevolgd door naam partner
-                     */
-                    switch ($order) {
-                        case 'NL2':
-                        case 'NL3':
-                            $prefix = $partnerPrefix;
-                            break;
+                /**
+                 * NL0	onbekend
+                 * NL1	eigennaam
+                 * NL2	naampartner
+                 * NL3	naampartner gevolgd door eigennaam
+                 * NL4	eigennaam gevolgd door naam partner
+                 */
+                $order = $name->getNameAssemblyOrder();
+                $order = $this->fixNameAssemblyOrder($order, $nameParts);                
 
-                        case 'NL4':
-                        case 'NL1':
-                        default:
-                            $prefix = $eigenPrefix;
-                            break;
-                    }
-                } else {
-                    $prefix = $nameParts->getBirthPrefix();
+                switch ($order) {
+                    case 'NL2':
+                    case 'NL3':
+                        $prefix = $partnerPrefix;
+                        break;
+
+                    case 'NL4':
+                    case 'NL1':
+                    default:
+                        $prefix = $eigenPrefix;
+                        break;
                 }
                 break;
 
@@ -482,12 +480,36 @@ class RespondentExtractor implements ExtractorInterface
 
         return $output;
     }
-    
+
+    /**
+     * Internal helper, change if other defaults needed
+     *
+     * @param string $order
+     * @param FN $nameParts
+     * @return string
+     */
+    protected function fixNameAssemblyOrder($order, $nameParts)
+    {
+        if (empty($order) || $order == 'NL0') {
+            // Default to birthname
+            $order = "NL1";            
+            // Female default is to take partnername and birthname when partner name is available
+            $gender = $this->_extractGender();
+            if ($gender == "F") {
+                if (!empty($nameParts->getPartnerName())) {
+                    $order = "NL3";
+                }
+            }
+        }
+
+        return $order;
+    }
+
     /**
      * Internal helper function
-     * 
+     *
      * @see self::_extractFirstName
-     * 
+     *
      * @param XPN[] $names
      * @return type
      */
@@ -496,7 +518,7 @@ class RespondentExtractor implements ExtractorInterface
         /** @var $names XPN[] */
         $names = array_filter($names);  // Strip emtpy elements
 
-        $firstNames = [];        
+        $firstNames = [];
         foreach ($names as $name) {
             $nameTypeCode = $name->getNameTypeCode();
             switch ($nameTypeCode) {
@@ -533,7 +555,7 @@ class RespondentExtractor implements ExtractorInterface
             }
             $firstNames[] = $firstName;
         }
-        
+
         $firstNames = array_filter($firstNames);
 
         if (false === $firstNames) return null;
@@ -560,7 +582,7 @@ class RespondentExtractor implements ExtractorInterface
     {
         return $this->ssnAuthority;
     }
-    
+
     /**
      * Get the typecode for the Social Security number
      *
@@ -586,7 +608,7 @@ class RespondentExtractor implements ExtractorInterface
 
     /**
      * Set the authority id for the Social Security number, SSN is not returned when empty
-     * 
+     *
      * Use typecode when authority provides more than one number
      *
      * @param string $authority     E.g. 'NLMINBIZA' for BSN
