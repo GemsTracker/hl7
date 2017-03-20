@@ -4,6 +4,7 @@ namespace Gems\HL7\Test;
 
 use Gems\HL7\Node\Message;
 use Gems\HL7\Segment\EVNSegment;
+use Gems\HL7\Segment\MRGSegment;
 use Gems\HL7\Segment\MSASegment;
 use Gems\HL7\Segment\MSHSegment;
 use Gems\HL7\Segment\PIDSegment;
@@ -21,11 +22,12 @@ class TestAbstract extends PHPUnit_Framework_TestCase
 
     protected $map = [
         'EVN' => EVNSegment::class,
-        'MSA' => MSASegment::class,
+        'MRG' => MRGSegment::class,
+        'MSA' => MSASegment::class,        
         'MSH' => MSHSegment::class,
         'PID' => PIDSegment::class,
         'PV1' => PV1Segment::class,
-        'SCH' => SCHSegment::class
+        'SCH' => SCHSegment::class,
     ];
 
     /**

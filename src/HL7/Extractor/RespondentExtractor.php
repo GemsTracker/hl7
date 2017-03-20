@@ -12,9 +12,11 @@
 namespace Gems\HL7\Extractor;
 
 use Gems\HL7\Node\Message;
+use Gems\HL7\Segment\MRGSegment;
+use Gems\HL7\Segment\PIDSegment;
+use Gems\HL7\Type\FN;
 use Gems\HL7\Type\XAD;
-use Gems\HL7\Type\XTN;
-use PharmaIntelligence\HL7\Node\Component;
+use Gems\HL7\Type\XPN;
 
 /**
  *
@@ -46,6 +48,7 @@ class RespondentExtractor implements ExtractorInterface
         'grs_iso_country'      => '_extractCountry',
         'grs_phone_1'          => '_extractPhoneHome',
         'grs_phone_2'          => '_extractPhoneBusiness',
+        'oldpid'               => '_extractOldPid',
     ];
 
     /**
@@ -62,7 +65,7 @@ class RespondentExtractor implements ExtractorInterface
 
     /**
      *
-     * @var \Gems\HL7\Node\Message;
+     * @var Message
      */
     protected $message;
 
@@ -75,7 +78,7 @@ class RespondentExtractor implements ExtractorInterface
 
     /**
      *
-     * @var \Gems\HL7\Segment\PIDSegment;
+     * @var PIDSegment
      */
     protected $pid;
 
@@ -287,6 +290,21 @@ class RespondentExtractor implements ExtractorInterface
         }
 
         return (string) $lastName;
+    }
+    
+    /**
+     * Returns the old PID in case of a MRG segment
+     * 
+     * @return string Or false when should not be used
+     */
+    protected function _extractOldPid()
+    {
+        /* @var $mrg MRGSegment */
+        $mrg = $this->message->getSegmentByName('MRG');
+        if (is_null($mrg)) {
+            return false;
+        }
+        return $mrg->getPriorPID();
     }
 
     /**
