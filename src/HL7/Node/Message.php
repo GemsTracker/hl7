@@ -33,6 +33,15 @@ class Message extends PharmaMessage
     {
         return $this->getSegmentByName('MSH');
     }
+    
+    /**
+     *
+     * @return \Gems\HL7\Segment\NTESegment
+     */
+    public function getNteSegment()
+    {
+        return $this->getSegmentByName('NTE');
+    }
 
     /**
      *

@@ -7,6 +7,7 @@ use Gems\HL7\Segment\EVNSegment;
 use Gems\HL7\Segment\MRGSegment;
 use Gems\HL7\Segment\MSASegment;
 use Gems\HL7\Segment\MSHSegment;
+use Gems\HL7\Segment\NTESegment;
 use Gems\HL7\Segment\PIDSegment;
 use Gems\HL7\Segment\PV1Segment;
 use Gems\HL7\Segment\SCHSegment;
@@ -28,6 +29,7 @@ class TestAbstract extends PHPUnit_Framework_TestCase
         'PID' => PIDSegment::class,
         'PV1' => PV1Segment::class,
         'SCH' => SCHSegment::class,
+        'NTE' => NTESegment::class,
     ];
 
     /**
