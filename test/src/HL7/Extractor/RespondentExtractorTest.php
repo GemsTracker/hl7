@@ -17,7 +17,7 @@ class RespondentExtractorTest extends RespondentExtractorTestAbstract
         $expectedResult = array(
             'gr2o_patient_nr'      => '1001303',
             'gr2o_id_organization' => 'NES',
-            'gr2o_reception_code'  => 'OK',
+            'gr2o_reception_code'  => 'deceased',
             'grs_ssn'              => '134960713',
             'grs_iso_lang'         => 'DE',
             'grs_first_name'       => 'Klaas',
