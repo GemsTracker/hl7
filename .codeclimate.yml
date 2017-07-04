@@ -9,7 +9,7 @@ engines:
   phpmd:
     enabled: true
     config:
-      rulesets: tests/phpmdruleset.xml
+      rulesets: test/phpmdruleset.xml
 ratings:
   paths:
   - "**.php"
