@@ -76,10 +76,15 @@ class PIDSegmentTest extends TestAbstract
     {
         $this->assertEquals('19700115', $this->object->getBirthDateTime()->getDate());
     }
-
+  
     public function testGetDeathDateTime()
     {
-        $this->assertEquals(null, $this->object->getDeathDateTime()->getDate());
+        $this->assertEquals('20170606090600', $this->object->getDeathDateTime()->getDateTime());
+    }
+    
+    public function testGetDeathIndicator()
+    {
+        $this->assertEquals('Y', $this->object->getDeathIndicator());
     }
 
 }
