@@ -12,6 +12,7 @@
 namespace Gems\HL7\Message;
 
 use Gems\HL7\Segment\MSASegment;
+use Gems\HL7\Segment\MSHSegment;
 use PharmaIntelligence\HL7\Node\Message;
 
 /**
@@ -41,7 +42,7 @@ class ACK extends Message {
         $this->escapeSequences['cursor_return'] = chr(13);  // Fix incorrect setting;
 
         $mshs        = $incomingMessage->getSegmentsByName('MSH');
-        /* @var $msh Segment\MSHSegment */
+        /* @var $msh MSHSegment */
         $msh         = array_shift($mshs);
         
         // To copy the segment, we create a newMSH segment, and add a new field with a repetition that hold the string value from the incoming MSH
@@ -58,7 +59,7 @@ class ACK extends Message {
 
         $msgType = $msh->getMessageType();
 
-        $mshResponse->setMessageType('ACK^' . $msgType[1]); // Return second part
+        $mshResponse->setMessageType('ACK^' . $msgType->getTriggerEvent()); // Return second part
         
         // Flip sending and receiving application/facility
         $receivedApplication = (string) $msh->getSendingApplication();
