@@ -36,5 +36,31 @@ class AppointmentExtractorTest extends AppointmentExtractorTestAbstract
                 $expectedResult, $this->appointmentExtractor->extractRow($message)
         );
     }
+    
+    public function testAppointmentCancelled()
+    {
+        $message = $this->_getMessageFromFile(TEST_DIR . '/resources/siu-s15-1-msg.txt');
+
+        $expectedResult = array(
+            'gap_patient_nr'      => '290313AB407',
+            'gap_organization_id' => 'COMEZ',
+            'gap_source'          => 'HL7v24.COMEZ',
+            'gap_id_in_source'    => '0007768281',
+            'gap_admission_code'  => 'A',
+            'gap_status_code'     => 'CA',
+            'gap_admission_time'  => '2016-02-11T15:32:00+01:00',
+            'gap_discharge_time'  => '2016-02-11T16:02:00+01:00',
+            'gap_attended_by'     => 'I0X',
+            'gap_referred_by'     => '027881',
+            'gap_activity'        => 'spcon',
+            'gap_location'        => ''
+        );
+
+        $this->appointmentExtractor->setPatientIdAutority('TSH');
+
+        $this->assertEquals(
+                $expectedResult, $this->appointmentExtractor->extractRow($message)
+        );
+    }
 
 }
