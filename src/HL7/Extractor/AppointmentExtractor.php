@@ -143,9 +143,9 @@ class AppointmentExtractor implements ExtractorInterface
      */
     protected function _extractAppointmentStatus()
     {
-        $type = strtoupper($this->message->getMshSegment()->getMessageType());
+        $type = $this->message->getMshSegment()->getMessageType();
 
-        if (in_array($type, ['SIU^S15', 'SIU^S16', 'SIU^S17'])) {
+        if ($type->getMessageType() == 'SIU' && in_array($type->getTriggerEvent(), ['S15', 'S16', 'S17'])) {
             return 'CA';
         }
         return 'AC';

@@ -13,7 +13,9 @@ namespace Gems\HL7\Segment;
 
 use DateTime;
 use Gems\HL7\Segment;
+use Gems\HL7\Type\MSG;
 use Gems\HL7\Type\TS;
+use function mb_detect_encoding;
 
 /**
  * MSH segment
@@ -102,8 +104,12 @@ class MSHSegment extends Segment
         return new TS($this->get(6,0));
     }
 
+    /**
+     * 
+     * @return MSG
+     */
     public function getMessageType() {
-        return $this->children[7][0];
+        return new MSG($this->children[7][0]);
     }
 
     public function getMessageControlId() {
