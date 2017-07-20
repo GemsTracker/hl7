@@ -145,10 +145,22 @@ class AppointmentExtractor implements ExtractorInterface
     {
         $type = $this->message->getMshSegment()->getMessageType();
 
-        if ($type->getMessageType() == 'SIU' && in_array($type->getTriggerEvent(), ['S15', 'S16', 'S17'])) {
+        if (in_array($type->getTriggerEvent(), ['S15', 'S16', 'S17'])) {
             return 'CA';
         }
-        return 'AC';
+        
+        $code = $this->message->getSchSegment()->getFillerStatusCode();
+        if (!is_null($code)) {
+            $status = strtolower($code->getId());
+            if (in_array($status, ['cancelled'])) {
+                return 'CA';    // Cancelled
+            }
+            if (in_array($status, ['completed'])) {
+                return 'CO';    // Completed
+            }
+        }
+        
+        return 'AC';            // Active
     }
 
     /**

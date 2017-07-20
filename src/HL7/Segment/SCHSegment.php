@@ -354,6 +354,19 @@ class SCHSegment extends Segment
             return new PL($item);
         }
     }
+    
+    /**
+     *
+     * @return CE
+     */
+    public function getFillerStatusCode()
+    {
+        $item = $this->get(25, 0);
+
+        if ($item) {
+            return new CE($item);
+        }
+    }
 
     /**
      * E.g. 000
