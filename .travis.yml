@@ -1,18 +1,34 @@
 language: php
 
 # list any PHP version you want to test against
-php:
-  - 5.6
-  - 7.0
+matrix:
+  include:
+    - php: 5.6
+      env: WITH_COVERAGE=true
+    - php: 7.0  
 
 # Commands to be run before your environment runs.
 install: composer install --dev
 
+before_script:
+  - if [[ "$WITH_COVERAGE" == "true" ]];
+    then
+        curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter;
+        chmod +x ./cc-test-reporter;
+        ./cc-test-reporter before-build;
+    fi
+
 # omitting "script:" will default to phpunit
-script: bin/phpunit --configuration test/phpunit.xml --coverage-clover build/logs/clover.xml
+script: 
+  - if [[ "$WITH_COVERAGE" == "true" ]];
+    then bin/phpunit --configuration tests/phpunit.xml --coverage-clover build/logs/clover.xml;
+    else bin/phpunit --configuration tests/phpunit.xml;
+    fi
 
 after_script:
-  - bin/test-reporter
+  - if [[ "$WITH_COVERAGE" == "true" ]]; then 
+        ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT;
+    fi
 addons:
     code_climate:
-        repo_token: b6b3650b1202896874a998e58c04133d4ea8f24e073bbd594d5ab9e43a64b560
+        repo_token: $CODECLIMATE_REPO_TOKEN
