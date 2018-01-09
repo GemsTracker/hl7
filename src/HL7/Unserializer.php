@@ -121,5 +121,24 @@ class Unserializer extends PharmaUnserializer implements TargetInterface
             throw new \Exception(sprintf("Requested encoding '%s' unavailable, choose one of: %s", $encoding, join(', ', $available)));
         }
     }
+    
+    /**
+     * Sometimes after the last segment we find a space, while this is technically 
+     * incorrect we can simply trim before we check
+     */
+    protected function splitSegments() {
+        $segmentStrings = explode($this->escapeSequences['cursor_return'], $this->hl7String);
+        foreach($segmentStrings as $segmentString) {
+            /**
+             * Last line
+             */
+            if(trim($segmentString) === '') {
+                break;
+            }
+            
+            $segment = $this->splitFields($segmentString);
+            $this->message->append($segment);
+        }
+    }
 
 }
