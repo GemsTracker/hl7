@@ -270,11 +270,11 @@ class RespondentExtractor implements ExtractorInterface
                         break;
 
                     case 'NL3':
-                        $lastName = $nameParts->getPartnerName() . '-' . join(' ', array($nameParts->getBirthPrefix(), $nameParts->getBirthName()));
+                        $lastName = $nameParts->getPartnerName() . '-' . join(' ', array_filter(array($nameParts->getBirthPrefix(), $nameParts->getBirthName())));
                         break;
 
                     case 'NL4':
-                        $lastName = $nameParts->getBirthName() . '-' . join(' ', array($nameParts->getPartnerPrefix(), $nameParts->getPartnerName()));
+                        $lastName = $nameParts->getBirthName() . '-' . join(' ', array_filter(array($nameParts->getPartnerPrefix(), $nameParts->getPartnerName())));
                         break;
 
                     case 'NL1':
