@@ -110,12 +110,12 @@ class PIDSegment extends Segment {
 
         return $result;
     }
-    
+
     /**
      * Iternal helper function
-     * 
+     *
      * @see XTN
-     * 
+     *
      * @param XTN[] $items Array of XTNs
      * @param string $code
      * @param string $type
@@ -127,7 +127,7 @@ class PIDSegment extends Segment {
         if (is_null($code) && is_null($type)) {
             return reset($items);
         }
-        
+
         foreach($items as $xtn)
         {
             if ((is_null($code) || $xtn->getUseCode() == $code) && (is_null($type) || $xtn->getEquipmentType() == $type)) {
@@ -348,23 +348,23 @@ class PIDSegment extends Segment {
 
     /**
      * Return the first hit for the XTN record matching code / type
-     * 
+     *
      * Use null to ignore code and / or type, omitting both will return first record
-     * 
-     * @param string|null $code Any \Gems\HL7\Type\XTN::getUseCode() 
+     *
+     * @param string|null $code Any \Gems\HL7\Type\XTN::getUseCode()
      * @param string|null $type Any \Gems\HL7\Type\XTN::getEquipmentType()
      * @return XTN|null
      */
     public function getPhoneBusiness($code = null, $type = null)
     {
         $items = $this->getPhoneBusinessList();
-        
+
         return $this->_getXTNByType($items, $code, $type);
     }
-    
+
     /**
      * Get a list of XTN objects for business phone
-     * 
+     *
      * @return XTN[]
      */
     public function getPhoneBusinessList($code = null, $type = null)
@@ -374,23 +374,23 @@ class PIDSegment extends Segment {
 
     /**
      * Return the first hit for the XTN record matching code / type
-     * 
+     *
      * Use null to ignore code and / or type, omitting both will return first record
-     * 
-     * @param string|null $code Any \Gems\HL7\Type\XTN::getUseCode() 
+     *
+     * @param string|null $code Any \Gems\HL7\Type\XTN::getUseCode()
      * @param string|null $type Any \Gems\HL7\Type\XTN::getEquipmentType()
      * @return XTN|null
      */
     public function getPhoneHome($code = null, $type = null)
     {
         $items = $this->getPhoneHomeList();
-        
+
         return $this->_getXTNByType($items, $code, $type);
     }
-    
+
     /**
      * Get a list of XTN objects for home phone
-     * 
+     *
      * @return XTN[]
      */
     public function getPhonehomeList($code = null, $type = null)

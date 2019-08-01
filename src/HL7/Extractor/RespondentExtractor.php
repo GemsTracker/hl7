@@ -291,10 +291,10 @@ class RespondentExtractor implements ExtractorInterface
 
         return (string) $lastName;
     }
-    
+
     /**
      * Returns the old PID in case of a MRG segment
-     * 
+     *
      * @return string Or false when should not be used
      */
     protected function _extractOldPid()
@@ -437,7 +437,7 @@ class RespondentExtractor implements ExtractorInterface
                  * NL4	eigennaam gevolgd door naam partner
                  */
                 $order = $name->getNameAssemblyOrder();
-                $order = $this->fixNameAssemblyOrder($order, $nameParts);                
+                $order = $this->fixNameAssemblyOrder($order, $nameParts);
 
                 switch ($order) {
                     case 'NL2':
@@ -510,7 +510,7 @@ class RespondentExtractor implements ExtractorInterface
     {
         if (empty($order) || $order == 'NL0') {
             // Default to birthname
-            $order = "NL1";            
+            $order = "NL1";
             // Female default is to take partnername and birthname when partner name is available
             $gender = $this->_extractGender();
             if ($gender == "F") {

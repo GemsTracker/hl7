@@ -42,6 +42,12 @@ class AppointmentExtractor implements ExtractorInterface
     ];
 
     /**
+     *
+     * @var string The date time format used in the export
+     */
+    protected $_datetimeFormat = 'c';
+
+    /**
      * Default code value
      *
      * @var string
@@ -95,7 +101,7 @@ class AppointmentExtractor implements ExtractorInterface
     protected function _extractAdmissionTime()
     {
 
-        return $this->sch->getAppointmentStartDatetime()->getFormatted('c') ?: false;
+        return $this->sch->getAppointmentStartDatetime()->getFormatted($this->_datetimeFormat) ?: false;
     }
 
     /**
@@ -104,7 +110,7 @@ class AppointmentExtractor implements ExtractorInterface
      */
     protected function _extractEndTime()
     {
-        return $this->sch->getAppointmentEndDatetime()->getFormatted('c') ?: false;
+        return $this->sch->getAppointmentEndDatetime()->getFormatted($this->_datetimeFormat) ?: false;
     }
 
     /**
@@ -148,7 +154,7 @@ class AppointmentExtractor implements ExtractorInterface
         if (in_array($type->getTriggerEvent(), ['S15', 'S16', 'S17'])) {
             return 'CA';
         }
-        
+
         $code = $this->message->getSchSegment()->getFillerStatusCode();
         if (!is_null($code)) {
             $status = strtolower($code->getId());
@@ -159,7 +165,7 @@ class AppointmentExtractor implements ExtractorInterface
                 return 'CO';    // Completed
             }
         }
-        
+
         return 'AC';            // Active
     }
 
