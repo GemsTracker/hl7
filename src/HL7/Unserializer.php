@@ -106,9 +106,9 @@ class Unserializer extends PharmaUnserializer implements TargetInterface
 
     /**
      * Set the encoding of incoming messages
-     * 
+     *
      * When this is set to null, the encoding will be read from the MSH segment
-     * 
+     *
      * @param string|null $encoding
      * @throws \Exception
      */
@@ -121,9 +121,9 @@ class Unserializer extends PharmaUnserializer implements TargetInterface
             throw new \Exception(sprintf("Requested encoding '%s' unavailable, choose one of: %s", $encoding, join(', ', $available)));
         }
     }
-    
+
     /**
-     * Sometimes after the last segment we find a space, while this is technically 
+     * Sometimes after the last segment we find a space, while this is technically
      * incorrect we can simply trim before we check
      */
     protected function splitSegments() {
@@ -135,8 +135,8 @@ class Unserializer extends PharmaUnserializer implements TargetInterface
             if(trim($segmentString) === '') {
                 break;
             }
-            
-            $segment = $this->splitFields($segmentString);
+
+            $segment = $this->splitFields(trim($segmentString));
             $this->message->append($segment);
         }
     }
