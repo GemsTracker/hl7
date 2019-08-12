@@ -17,6 +17,7 @@ class RespondentExtractorTest extends RespondentExtractorTestAbstract
         $expectedResult = array(
             'gr2o_patient_nr'      => '1001303',
             'gr2o_id_organization' => 'NES',
+            'gr2o_email'           => 'email@example.net',
             'gr2o_reception_code'  => 'deceased',
             'grs_ssn'              => '134960713',
             'grs_iso_lang'         => 'DE',
@@ -30,7 +31,6 @@ class RespondentExtractorTest extends RespondentExtractorTestAbstract
             'grs_city'             => 'Kukeleku',
             'grs_iso_country'      => 'DE',
             'grs_phone_1'          => '0106565656',
-            'grs_email'            => 'email@example.net',
             'grs_phone_2'          => '0612345678',
         );
 
@@ -47,6 +47,7 @@ class RespondentExtractorTest extends RespondentExtractorTestAbstract
         $expectedResult = array(
             'gr2o_patient_nr'      => '1001303',
             'gr2o_id_organization' => 'NES',
+            'gr2o_email'           => 'email@example.net',
             'gr2o_reception_code'  => 'OK',
             'grs_ssn'              => '134960713',
             'grs_iso_lang'         => 'DE',
@@ -60,7 +61,6 @@ class RespondentExtractorTest extends RespondentExtractorTestAbstract
             'grs_city'             => 'Kukeleku',
             'grs_iso_country'      => 'DE',
             'grs_phone_1'          => '0106565656',
-            'grs_email'            => 'email@example.net',
             'grs_phone_2'          => '0612345678',
         );
 
@@ -69,7 +69,7 @@ class RespondentExtractorTest extends RespondentExtractorTestAbstract
                 $expectedResult, $this->respondentExtractor->extractRow($message)
         );
     }
-    
+
     public function testRespondent3()
     {
         $message = $this->_getMessageFromFile(TEST_DIR . '/resources/orm_2.txt');
@@ -77,6 +77,7 @@ class RespondentExtractorTest extends RespondentExtractorTestAbstract
         $expectedResult = array(
             'gr2o_patient_nr'      => '1001303',
             'gr2o_id_organization' => 'NES',
+            'gr2o_email'           => 'email@example.net',
             'gr2o_reception_code'  => 'OK',
             'grs_ssn'              => '134960713',
             'grs_iso_lang'         => 'DE',
@@ -90,7 +91,6 @@ class RespondentExtractorTest extends RespondentExtractorTestAbstract
             'grs_city'             => 'Kukeleku',
             'grs_iso_country'      => 'DE',
             'grs_phone_1'          => '0106565656',
-            'grs_email'            => 'email@example.net',
             'grs_phone_2'          => '0612345678',
         );
 

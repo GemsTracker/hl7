@@ -32,11 +32,11 @@ class RespondentExtractor implements ExtractorInterface
     protected $_fieldList = [
         'gr2o_patient_nr'      => '_extractPatientId',
         'gr2o_id_organization' => '_extractOrganizationId',
+        'gr2o_email'           => '_extractEmail',
         'gr2o_consent'         => '_extractConsent',
         'gr2o_reception_code'  => '_extractReceptionCode',
         'grs_ssn'              => '_extractSsn',
         'grs_iso_lang'         => '_extractLanguage',
-        'grs_email'            => '_extractEmail',
         'grs_first_name'       => '_extractFirstName',
         'grs_surname_prefix'   => '_extractSurnamePrefix',
         'grs_last_name'        => '_extractLastName',
