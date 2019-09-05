@@ -17,6 +17,7 @@ use Gems\HL7\Type\TS;
 use Gems\HL7\Type\XAD;
 use Gems\HL7\Type\XPN;
 use Gems\HL7\Type\XTN;
+use PharmaIntelligence\HL7\Node\Field;
 
 /**
  * PID segment
@@ -180,7 +181,13 @@ class PIDSegment extends Segment {
      */
     public function getDeathDateTime()
     {
-        return new TS($this->get(29,0));
+        $deathDate = $this->get(29,0);
+        if (is_null($deathDate)) {
+            // Create an empty field
+            $deathDate = new Field();
+            $deathDate->setParent($this);
+        }
+        return new TS($deathDate);
     }
 
     /**
@@ -405,7 +412,10 @@ class PIDSegment extends Segment {
     public function getPrimaryLanguage()
     {
         $pl = $this->get(15,0);
-        return reset($pl);
+        if (!is_null($pl))  {
+            $pl = reset($pl);
+        }
+        return $pl;
     }
 
     public function getSex()
