@@ -24,7 +24,7 @@ use PharmaIntelligence\HL7\Node\Repetition;
  *
  * SEQ	LENGTH	DT	OPT	TBL #	NAME
  * XCN.1	0	ST	O		Id Number
- * XCN.2	0	FN	O		Family Name
+ * XCN.2	0	FaN	O		Family Name
  * XCN.3	0	ST	O	FirstName	Given Name
  * XCN.4	0	ST	O		Second And Further Given Names Or Initials Thereof
  * XCN.5	0	ST	O		Suffix

@@ -19,7 +19,7 @@ use Gems\HL7\Type;
  * See http://hl7-definition.caristix.com:9010
  *
  * SEQ	LENGTH	DT	OPT	TBL #	NAME
- * XPN.1	0	FN	O		Family Name
+ * XPN.1	0	FaN	O		Family Name
  * XPN.2	0	ST	O       FirstName Given Name
  * XPN.3	0	ST	O		Second And Further Given Names Or Initials Thereof
  * XPN.4	0	ST	O		Suffix
@@ -41,11 +41,11 @@ class XPN extends Type
 {
     /**
      *
-     * @return FN
+     * @return FaN
      */
     public function getFamilyName()
     {
-        return new FN($this->_get(1));
+        return new FaN($this->_get(1));
     }
 
     public function getGivenName()

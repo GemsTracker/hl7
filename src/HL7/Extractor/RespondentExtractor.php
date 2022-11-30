@@ -14,7 +14,7 @@ namespace Gems\HL7\Extractor;
 use Gems\HL7\Node\Message;
 use Gems\HL7\Segment\MRGSegment;
 use Gems\HL7\Segment\PIDSegment;
-use Gems\HL7\Type\FN;
+use Gems\HL7\Type\FaN;
 use Gems\HL7\Type\XAD;
 use Gems\HL7\Type\XPN;
 
@@ -503,7 +503,7 @@ class RespondentExtractor implements ExtractorInterface
      * Internal helper, change if other defaults needed
      *
      * @param string $order
-     * @param FN $nameParts
+     * @param FaN    $nameParts
      * @return string
      */
     protected function fixNameAssemblyOrder($order, $nameParts)

@@ -12,16 +12,16 @@
 namespace Gems\HL7\Type;
 
 /**
- * XPN: Extended Person Name
+ * FN: Family Name (change from FN to FaN because FN is a reserved function in PHP 7.4
  *
  * See http://hl7-definition.caristix.com:9010
  *
  * SEQ	LENGTH	DT	OPT	TBL #	NAME
- * FN.1	0	ST	O		Display name
- * FN.2	0	ST	O               Own prefix
- * FN.3	0	ST	O		Own Family Name
- * FN.4	0	ST	O		Partner prefix 
- * FN.5	0	ST	O		Partner Family Name
+ * FaN.1	0	ST	O		Display name
+ * FaN.2	0	ST	O               Own prefix
+ * FaN.3	0	ST	O		Own Family Name
+ * FaN.4	0	ST	O		Partner prefix 
+ * FaN.5	0	ST	O		Partner Family Name
  *
  * @package    Gems
  * @subpackage HL7\Type
@@ -29,7 +29,7 @@ namespace Gems\HL7\Type;
  * @license    No free license, do not copy
  * @license    New BSD License
  */
-class FN extends \Gems\HL7\Type
+class FaN extends \Gems\HL7\Type
 {
     /**
      *
