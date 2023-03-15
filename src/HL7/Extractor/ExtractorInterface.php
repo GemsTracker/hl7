@@ -29,4 +29,9 @@ interface ExtractorInterface
      * @return array Or false when not valid
      */
     public function extractRow(Message $message);
+
+    /**
+     * @return String message telling what went wrong (if anything)
+     */
+    public function getErrorMessage();
 }

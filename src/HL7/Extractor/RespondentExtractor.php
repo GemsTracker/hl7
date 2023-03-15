@@ -58,6 +58,11 @@ class RespondentExtractor implements ExtractorInterface
     public $defaultCountry = 'EN';
 
     /**
+     * @var ?string Optional error message
+     */
+    protected $errorMessage = null;
+
+    /**
      *
      * @var XAD
      */
@@ -493,6 +498,11 @@ class RespondentExtractor implements ExtractorInterface
             }
         }
         if (! isset($output['gr2o_patient_nr'])) {
+            $this->errorMessage = sprintf("No patientnumber with code identifier '%s' found.", $this->patientIdAuthority);
+            if (! isset($output['gr2o_id_organization'])) {
+                $this->errorMessage .= " Organization id not found.";
+            }
+
             return false;
         }
 
@@ -521,6 +531,14 @@ class RespondentExtractor implements ExtractorInterface
         }
 
         return $order;
+    }
+
+    /**
+     * @return ?string messages telling what went wrong (if anything)
+     */
+    public function getErrorMessage()
+    {
+        return $this->errorMessage;
     }
 
     /**

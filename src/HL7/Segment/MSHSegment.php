@@ -15,7 +15,6 @@ use DateTime;
 use Gems\HL7\Segment;
 use Gems\HL7\Type\MSG;
 use Gems\HL7\Type\TS;
-use function mb_detect_encoding;
 
 /**
  * MSH segment
@@ -63,7 +62,7 @@ class MSHSegment extends Segment
         } 
         
         // Fallback, try to detect encoding
-        return mb_detect_encoding($this->__toString(), "auto");
+        return \mb_detect_encoding($this->__toString(), "auto");
     }
 
     public function getSendingApplication() {
@@ -82,7 +81,7 @@ class MSHSegment extends Segment
     public function getSendingOrganizationId()
     {
         $orgData = $this->getSendingApplication();
-        if (count($orgData) > 1) {
+        if (is_countable($orgData) && count($orgData) > 1) {
             return (string) $orgData[2];
         }
         return (string) $orgData;

@@ -55,6 +55,11 @@ class AppointmentExtractor implements ExtractorInterface
     protected $defaultCode = 'A';
 
     /**
+     * @var ?string Optional error message
+     */
+    protected $errorMessage = null;
+
+    /**
      *
      * @var string Start id to identify the source if the appointment as HL7
      */
@@ -270,10 +275,27 @@ class AppointmentExtractor implements ExtractorInterface
             }
         }
         if (! isset($output['gap_patient_nr'], $output['gap_admission_time'])) {
+            $this->errorMessage = '';
+
+            if (! isset($output['gap_patient_nr'])) {
+                $this->errorMessage .= sprintf("No patientnumber with code %s found.", $this->patientIdAuthority);
+            }
+            if (! isset($output['gap_admission_time'])) {
+                $this->errorMessage .= " Admission time not set.";
+            }
+
             return false;
         }
 
         return $output;
+    }
+
+    /**
+     * @return ?string messages telling what went wrong (if anything)
+     */
+    public function getErrorMessage()
+    {
+        return $this->errorMessage;
     }
 
     /**
