@@ -27,6 +27,15 @@ class Message extends PharmaMessage
 {
     /**
      *
+     * @return \Gems\HL7\Segment\AILSegment
+     */
+    public function getAilSegment()
+    {
+        return $this->getSegmentByName('AIL');
+    }
+
+    /**
+     *
      * @return \Gems\HL7\Segment\MSHSegment
      */
     public function getMshSegment()
@@ -54,11 +63,29 @@ class Message extends PharmaMessage
 
     /**
      *
+     * @return \Gems\HL7\Segment\PV1Segment
+     */
+    public function getPv1Segment()
+    {
+        return $this->getSegmentByName('PV1');
+    }
+
+    /**
+     *
      * @return \Gems\HL7\Segment\SCHSegment
      */
     public function getSchSegment()
     {
         return $this->getSegmentByName('SCH');
+    }
+
+    /**
+     *
+     * @return \Gems\HL7\Segment\ZDBSegment
+     */
+    public function getZdbSegment()
+    {
+        return $this->getSegmentByName('ZDB');
     }
 
     /**

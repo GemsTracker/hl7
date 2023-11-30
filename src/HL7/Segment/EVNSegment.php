@@ -13,7 +13,6 @@ namespace Gems\HL7\Segment;
 
 use Gems\HL7\Segment;
 use Gems\HL7\Type\TS;
-use PharmaIntelligence\HL7\Node\Repetition;
 
 /**
  * EVN segment
